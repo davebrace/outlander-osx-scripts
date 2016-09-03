@@ -1,4 +1,4 @@
-debuglevel 5
+# debuglevel 5
 
 top:
   if_1 then {
