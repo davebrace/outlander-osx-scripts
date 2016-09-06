@@ -298,7 +298,7 @@ stow_Component:
   return
 
 bin:
-  matchre return You drop
+  matchre return You drop|You put
   put put my $righthandnoun in bin
   matchwait 4
   goto bin

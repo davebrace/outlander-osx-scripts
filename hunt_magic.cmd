@@ -1,7 +1,7 @@
-var arrange 1
+var arrange 0
 var cast_count 0
 
-var skinnablecritters rat|hog|goblin|boar|eel|bobcat|cougar|reaver|wolf|snowbeast|gargoyle|togball|ape|tusky|wyvern|firecat|troll|crocodile
+var skinnablecritters rat|hog|goblin|boar|eel|bobcat|cougar|reaver|wolf|snowbeast|gargoyle|togball|ape|tusky|wyvern|firecat|troll|crocodile|bear
 
 start:
   put .swap_greaves
@@ -19,18 +19,18 @@ start:
   goto debuff
 
 debuff:
-  put pathway stop
-  pause 1
+   put pathway stop
+   pause 1
 
   gosub check_exp
   gosub clear
   var cast_count 0
 
-  gosub cast_spell prep frostbite 15 5
+   gosub cast_spell prep tremor 10 5
 
-  pause 0.5
+   pause 0.5
 
-  gosub cast_spell prep thunderclap 10 3
+   gosub cast_spell prep thunderclap 10 3
 
   pause 0.5
   put pathway focus damage
@@ -239,4 +239,8 @@ end:
   put pathway stop
   pause 0.5
   put wear armband
+  pause 0.5
+  put #goto crossing
+  waitforre ^YOU HAVE ARRIVED
+  put #flash
   echo *** Targeted Magic Mind Locked! ***

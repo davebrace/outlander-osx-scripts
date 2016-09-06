@@ -49,7 +49,7 @@ use_knuckles:
 
 train_thrown_weap:
   gosub swap_greaves
-  put .hunt_throw %weapon 1
+  put .hunt_throw %weapon 0
   waitforre ^HUNT DONE
   echo *** %weapon MINDLOCKED ***
   pause 0.5
@@ -57,7 +57,7 @@ train_thrown_weap:
 
 train_weap:
   gosub swap_greaves
-  put .hunt %weapon 1
+  put .hunt %weapon 0
   waitforre ^HUNT DONE
   echo *** %weapon MINDLOCKED ***
   pause 0.5
