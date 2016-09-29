@@ -1,6 +1,8 @@
 # debuglevel 5 
 
 start:
+  put stand
+  pause 0.5
   goto collect_rocks
 
 collect_rocks:

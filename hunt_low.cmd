@@ -1,10 +1,10 @@
 # debuglevel 5
 
 start:
-  put stance set 41 40 100 100
+  put stance set 60 61 61 100
   pause 0.5
 
-  gosub use_nightstick
+  gosub use_flail
   gosub train_weap
 
   gosub use_knuckles
@@ -13,8 +13,11 @@ start:
   gosub use_2he
   gosub train_weap 
 
-  gosub use_flail
+  gosub use_nightstick
   gosub train_weap
+
+  put stance set 100 0 82 100
+  pause 0.5
 
   goto end
 
@@ -49,6 +52,6 @@ train_weap:
 
 end:
   echo *** Weapons Mind Locked! ***
-  put #goto crossing
+  put #goto fissure
   waitforre ^YOU HAVE ARRIVED
   put #flash

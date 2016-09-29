@@ -662,6 +662,10 @@ STOWING:
      if "$lefthand" != "Empty" then gosub STOW left
      return
 
+PAUSE:
+  pause 1
+  return
+
 done:
   pause 1
   if "%box_popping" != "ON" then

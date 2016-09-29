@@ -13,7 +13,7 @@ start:
   put rem armband
   pause 1
 
-  put stance set 70 61 50 100
+  put stance set 70 61 51 100
   pause 1
 
   goto debuff
@@ -26,11 +26,11 @@ debuff:
   gosub clear
   var cast_count 0
 
-   gosub cast_spell prep tremor 10 5
+  #  gosub cast_spell prep tremor 10 5
 
-   pause 0.5
+  #  pause 0.5
 
-   gosub cast_spell prep thunderclap 10 3
+   gosub cast_spell prep thunderclap 10 4 15
 
   pause 0.5
   put pathway focus damage
@@ -41,11 +41,11 @@ target:
   gosub check_exp
   gosub clear
 
-  if %cast_count > 10 then goto debuff
+  if %cast_count > 9 then goto debuff
 
   matchre wait_for_mobs There is nothing|close enough to attack|What are you trying to attack|It would help if you were closer
 
-  gosub cast_spell targ fb 15 7
+  gosub cast_spell targ fb 15 10 3
 
   gosub check_loot
 
@@ -61,6 +61,7 @@ cast_spell:
   gosub set_spell $2
   gosub set_prep_mana $3
   gosub set_charge_mana $4
+  gosub set_cast_wait $5
 
   gosub mana_check
 
@@ -70,7 +71,10 @@ cast_spell:
   gosub use_cambrinth
 
   matchre cast You feel fully prepared|formation of a targeting pattern|target pattern has finished forming
-  matchwait 15
+  matchwait 12
+  if "$preparedspell" != "None" then {
+    gosub cast
+  }
   return
 
 set_spell:
@@ -89,6 +93,10 @@ set_spell_action:
   var spell_action $1
   return
 
+set_cast_wait: 
+  var cast_wait $1
+  return
+
 use_cambrinth:
   put charge armband %charge_mana
   pause 3 
@@ -96,7 +104,7 @@ use_cambrinth:
   return
 
 invoke_cambrinth:
-  matchre invoke_arm but fail|accidentally attune yourself
+  matchre invoke_cambrinth but fail|accidentally attune yourself
   matchre done readying all of its mana|you only are able to attune yourself|manage to attune yourself exactly as you intended to
   put invoke my armband %charge_mana
   matchwait 2
@@ -240,7 +248,7 @@ end:
   pause 0.5
   put wear armband
   pause 0.5
-  put #goto crossing
+  put #goto fissure
   waitforre ^YOU HAVE ARRIVED
   put #flash
   echo *** Targeted Magic Mind Locked! ***
