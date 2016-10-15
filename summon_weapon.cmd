@@ -18,11 +18,11 @@ start:
   pause 0.75
   wait
 
-  put summon weapon lance
+  put summon weapon
   pause 0.75
   wait
 
-  put break stone lance
+  put break $righthandnoun
   pause 0.75
 
   goto start

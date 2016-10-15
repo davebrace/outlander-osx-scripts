@@ -1,19 +1,19 @@
 # debuglevel 5
 
 start:
-  put stance set 60 61 61 100
+  put stance set 65 67 50 100
   pause 0.5
 
   gosub use_flail
-  gosub train_weap
-
-  gosub use_knuckles
   gosub train_weap
 
   gosub use_2he
   gosub train_weap 
 
   gosub use_nightstick
+  gosub train_weap
+
+  gosub use_knuckles
   gosub train_weap
 
   put stance set 100 0 82 100
@@ -44,7 +44,7 @@ use_knuckles:
 
 train_weap:
   gosub swap_greaves
-  put .hunt %weapon 5
+  put .hunt %weapon $arrange
   waitforre ^HUNT DONE
   echo *** %weapon MINDLOCKED ***
   pause 0.5
@@ -52,6 +52,8 @@ train_weap:
 
 end:
   echo *** Weapons Mind Locked! ***
-  put #goto fissure
+  put release cyclic
+  pause 0.5
+  put #goto $destination
   waitforre ^YOU HAVE ARRIVED
   put #flash

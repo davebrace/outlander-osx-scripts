@@ -1,4 +1,3 @@
-var arrange 0
 var cast_count 0
 
 var skinnablecritters rat|hog|goblin|boar|eel|bobcat|cougar|reaver|wolf|snowbeast|gargoyle|togball|ape|tusky|wyvern|firecat|troll|crocodile|bear
@@ -19,18 +18,23 @@ start:
   goto debuff
 
 debuff:
-   put pathway stop
-   pause 1
-
   gosub check_exp
   gosub clear
   var cast_count 0
 
-  #  gosub cast_spell prep tremor 10 5
+  if ($Debilitation.LearningRate < 30) {
+      put pathway stop
+      pause 1
 
-  #  pause 0.5
+      gosub cast_spell prep ee 6 3 10
 
-   gosub cast_spell prep thunderclap 10 4 15
+      pause 0.5
+
+      gosub cast_spell prep thunderclap 10 4 15
+  } else {
+      put release cyclic
+      pause 0.5
+  }
 
   pause 0.5
   put pathway focus damage
@@ -43,9 +47,7 @@ target:
 
   if %cast_count > 9 then goto debuff
 
-  matchre wait_for_mobs There is nothing|close enough to attack|What are you trying to attack|It would help if you were closer
-
-  gosub cast_spell targ fb 15 10 3
+  gosub cast_spell targ fb 15 11 3
 
   gosub check_loot
 
@@ -65,17 +67,26 @@ cast_spell:
 
   gosub mana_check
 
-  pause 0.5
+  matchre no_creature What are you trying to attack
   put %spell_action %spell_name %prep_mana
+  matchwait 1
 
   gosub use_cambrinth
 
   matchre cast You feel fully prepared|formation of a targeting pattern|target pattern has finished forming
-  matchwait 12
+  matchwait 9
   if "$preparedspell" != "None" then {
     gosub cast
   }
   return
+
+no_creature:
+  if "$preparedspell" != "None" then {
+    put release spell
+  }
+  echo *** No creatures to attack ***
+  pause 10
+  goto target
 
 set_spell:
   var spell_name $1
@@ -132,7 +143,7 @@ skin:
 do_arrange:
   var count 0
   arrange.loop:
-    if %count < %arrange {
+    if %count < $arrange {
       put arrange
       pause 2
       math count add 1
@@ -206,13 +217,6 @@ check_mana:
   }
   return
 
-wait_for_mobs:
-  put release
-  pause 1
-  gosub clear
-  pause 5
-  goto target
-
 health:
   if $health <= 70 {
     goto abort
@@ -242,13 +246,15 @@ RETURN:
   return
 
 end:
+  put release cyclic
+  pause 0.5
   put sheath broad in bald
   pause 0.5
   put pathway stop
   pause 0.5
   put wear armband
   pause 0.5
-  put #goto fissure
+  put #goto $destination
   waitforre ^YOU HAVE ARRIVED
   put #flash
   echo *** Targeted Magic Mind Locked! ***

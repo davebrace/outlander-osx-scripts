@@ -13,13 +13,13 @@ use_armband:
   gosub clear
   gosub exp_check
 
-  gosub cast_spell sw 5 20
+  gosub cast_spell sw 5 21
   # gosub cast_spell suf 5 16
   # gosub cast_spell substr 5 16
   # gosub cast_spell tw 5 16
 
-  gosub cast_spell es 1 11
-  gosub cast_spell ignite 5 14 broad
+  gosub cast_spell es 1 12
+  gosub cast_spell ignite 5 15 broad
 
   goto use_armband
 

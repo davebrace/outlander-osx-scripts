@@ -53,7 +53,7 @@ use_knuckles:
 
 train_thrown_weap:
   gosub swap_greaves
-  put .hunt_throw %weapon 0
+  put .hunt_throw %weapon $arrange
   waitforre ^HUNT DONE
   echo *** %weapon MINDLOCKED ***
   pause 0.5
@@ -61,7 +61,7 @@ train_thrown_weap:
 
 train_weap:
   gosub swap_greaves
-  put .hunt %weapon 0
+  put .hunt %weapon $arrange
   waitforre ^HUNT DONE
   echo *** %weapon MINDLOCKED ***
   pause 0.5
@@ -69,6 +69,8 @@ train_weap:
 
 end:
   echo *** Weapons Mind Locked! ***
-  put #goto fissure
+  put release cyclic
+  pause 0.5
+  put #goto $destination
   waitforre ^YOU HAVE ARRIVED
   put #flash
