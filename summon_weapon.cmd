@@ -22,7 +22,7 @@ start:
   pause 0.75
   wait
 
-  put break $righthandnoun
+  put break my $righthandnoun
   pause 0.75
 
   goto start

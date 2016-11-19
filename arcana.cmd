@@ -3,8 +3,6 @@
 start:
   put get broad
   pause 0.5
-  put swap
-  pause 0.5
   put rem armband
   pause 0.5
   goto use_armband
@@ -13,13 +11,13 @@ use_armband:
   gosub clear
   gosub exp_check
 
-  gosub cast_spell sw 5 21
+  gosub cast_spell sw 5 23
   # gosub cast_spell suf 5 16
   # gosub cast_spell substr 5 16
   # gosub cast_spell tw 5 16
 
-  gosub cast_spell es 1 12
-  gosub cast_spell ignite 5 15 broad
+  gosub cast_spell es 1 15
+  gosub cast_spell ignite 5 17 broad
 
   goto use_armband
 
@@ -50,7 +48,7 @@ cast_spell:
   gosub charge_arm %charge_mana
 
   match cast You feel fully prepared to cast your spell
-  matchwait 30 
+  matchwait 35
   return
 
 exp_check:

@@ -1,13 +1,15 @@
+debuglevel 2
+
 var cast_count 0
 
-var skinnablecritters rat|hog|goblin|boar|eel|bobcat|cougar|reaver|wolf|snowbeast|gargoyle|togball|ape|tusky|wyvern|firecat|troll|crocodile|bear
+var skinnablecritters rat|hog|goblin|boar|eel|bobcat|cougar|reaver|wolf|snowbeast|gargoyle|togball|ape|tusky|wyvern|firecat|troll|crocodile|bear|ogre|leucro
 
 start:
   put .swap_greaves
   waitforre GREAVES SWAPPED
 
   put wield broadsword
-  pause 1
+  pause 0.5
 
   put rem armband
   pause 1
@@ -22,22 +24,24 @@ debuff:
   gosub clear
   var cast_count 0
 
+  gosub cast_eth_fissure
+
   if ($Debilitation.LearningRate < 30) {
       put pathway stop
       pause 1
 
-      gosub cast_spell prep ee 6 3 10
+      gosub prep_spell ee 6 3
 
       pause 0.5
 
-      gosub cast_spell prep thunderclap 10 4 15
+      # gosub prep_spell thunderclap 10 4 
   } else {
       put release cyclic
       pause 0.5
   }
 
   pause 0.5
-  put pathway focus damage
+  put pathway focus accuracy
 
   goto target
 
@@ -45,36 +49,76 @@ target:
   gosub check_exp
   gosub clear
 
-  if %cast_count > 9 then goto debuff
+  if %cast_count > 15 then goto debuff
 
-  gosub cast_spell targ fb 15 11 3
+  gosub prep_tm
 
   gosub check_loot
+
+cast_fire:
+  put cast fire
+  pause 0.75
+  wait
+  return
 
 cast:
   put cast
   pause 0.75
   wait
-  math cast_count add 1
   return
 
-cast_spell:
-  gosub set_spell_action $1
-  gosub set_spell $2
-  gosub set_prep_mana $3
-  gosub set_charge_mana $4
-  gosub set_cast_wait $5
+cast_eth_fissure:
+  gosub set_charge_mana 8
+  gosub set_cast_wait 30
+
+  gosub mana_check
+
+  put prep eth fissure 15
+
+  gosub use_cambrinth
+
+  matchre cast_fire You feel fully prepared
+  matchwait 30 
+  if "$preparedspell" != "None" then {
+    gosub cast_fire
+  }
+  return
+
+cast_tm:
+  gosub use_cambrinth
+
+  matchre cast You feel fully prepared|formation of a targeting pattern|target pattern has finished forming
+  matchwait 5
+  if "$preparedspell" != "None" then {
+    gosub cast
+  }
+  return
+
+prep_tm:
+  gosub set_charge_mana 12
 
   gosub mana_check
 
   matchre no_creature What are you trying to attack
-  put %spell_action %spell_name %prep_mana
-  matchwait 1
+  matchre cast_tm target pattern around
+  put targ fb 15
+  matchwait 2
+
+  return
+
+prep_spell:
+  gosub set_spell $1
+  gosub set_prep_mana $2
+  gosub set_charge_mana $3
+
+  gosub mana_check
+
+  put prep %spell_name %prep_mana
 
   gosub use_cambrinth
 
   matchre cast You feel fully prepared|formation of a targeting pattern|target pattern has finished forming
-  matchwait 9
+  matchwait 15
   if "$preparedspell" != "None" then {
     gosub cast
   }
@@ -86,7 +130,7 @@ no_creature:
   }
   echo *** No creatures to attack ***
   pause 10
-  goto target
+  gosub check_loot
 
 set_spell:
   var spell_name $1
@@ -206,7 +250,7 @@ check_loot:
   goto target
 
 check_mana:
-  if $mana <= 20 {
+  if $mana <= 22 {
     echo
     echo  *** Recovering mana ***
     echo
@@ -242,13 +286,18 @@ abort:
     pause 3
     goto abort.loop
 
+aborted:
+  pause 0.5
+  put #goto $destination
+  exit 
+
 RETURN:
   return
 
 end:
   put release cyclic
   pause 0.5
-  put sheath broad in bald
+  put sheath my broadsword in my bald
   pause 0.5
   put pathway stop
   pause 0.5

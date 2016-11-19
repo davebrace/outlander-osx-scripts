@@ -4,14 +4,16 @@ start:
   put stance set 65 67 50 100
   pause 0.5
 
-  gosub use_flail
+  gosub use_quarterstaff
   gosub train_weap
 
   gosub use_2he
   gosub train_weap 
 
-  gosub use_nightstick
+  gosub use_2hb
   gosub train_weap
+
+  # gosub train_tactics
 
   gosub use_knuckles
   gosub train_weap
@@ -21,30 +23,43 @@ start:
 
   goto end
 
+train_tactics:
+  put .tactics
+  waitforre ^TACTICS COMPLETE
+  return
+
 swap_greaves:
   put .swap_greaves
   waitforre ^GREAVES SWAPPED
   return
 
-use_flail:
+use_2hb:
   var weapon flail
+  var summon NO
+  var skill "2HB"
   return
 
-use_nightstick:
-  var weapon nightstick
+use_quarterstaff:
+  var weapon quarterstaff
+  var summon YES
+  var skill staves
   return
 
 use_2he:
   var weapon sword
+  var summon NO
+  var skill "2HE"
   return
 
 use_knuckles:
   var weapon knuckles
+  var summon NO
+  var skill Brawling
   return
 
 train_weap:
   gosub swap_greaves
-  put .hunt %weapon $arrange
+  put .hunt %weapon %summon %skill
   waitforre ^HUNT DONE
   echo *** %weapon MINDLOCKED ***
   pause 0.5
