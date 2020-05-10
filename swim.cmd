@@ -10,7 +10,7 @@ Swim:
 
 Swim.w:
   matchre SwimmingEXPCheck You swim|You splash|You wade
-  matchre Swim.w You work|You struggle|You flounder|You slap
+  matchre Swim.w You work|You struggle|You flounder|You slap|You blunder
   match Swim.w seconds
   pause 0.5
   put %swimDirection
