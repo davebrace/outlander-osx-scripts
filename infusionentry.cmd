@@ -19,14 +19,12 @@ lookSymbol:
   match RAVEN raven
   match LION lion
   match WREN image of the wren
-  matchre lookSymbol Sorry, you may
 
   put l star
-  pause 0.5
   put l sun
-  pause 0.5
 
-  matchwait 5
+  matchwait
+
 
 WREN:
   var symbolLach wren
@@ -164,3 +162,4 @@ goCoffin:
 
 arrivedCoffin:
   echo ** DONE **
+  put #parse MOVE SUCCESSFUL
