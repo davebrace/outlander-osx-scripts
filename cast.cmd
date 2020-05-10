@@ -1,6 +1,6 @@
 #[Magic]: Cast spell at full preparedness
 
-matchre CAST You feel fully prepared|formation of a targeting pattern
+matchre CAST You feel fully prepared|formation of a targeting pattern|Your target pattern
 matchwait 60
 goto END
 
