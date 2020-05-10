@@ -11,39 +11,34 @@ use_armband:
   gosub clear
   gosub exp_check
 
-  gosub cast_spell sw 5 23
-  # gosub cast_spell suf 5 16
+  gosub cast_spell sw 10 24
+  gosub cast_spell suf 10 24
   # gosub cast_spell substr 5 16
   # gosub cast_spell tw 5 16
 
-  gosub cast_spell es 1 15
-  gosub cast_spell ignite 5 17 broad
+  gosub cast_spell es 10 24
+  gosub cast_spell ignite 5 23 broad
 
   goto use_armband
 
-set_spell:
-  var spell_name $1
-  return
-
-set_prep_mana:
-  var prep_mana $1
-  return
-
-set_charge_mana:
-  var charge_mana $1
-  return
-
-set_spell_target:
-  var spell_target $1
+mana_check:
+  if $mana <= 40 {
+    echo  *** Recovering mana ***
+    pause 5
+    goto mana_check
+  }
   return
 
 cast_spell:
-  gosub set_spell $1
-  gosub set_prep_mana $2
-  gosub set_charge_mana $3
-  gosub set_spell_target $4
+  var spell_name $1
+  var prep_mana $2
+  var charge_mana $3
+  var spell_target $4
+
+  gosub mana_check
 
   put prep %spell_name %prep_mana
+  pause 0.5
 
   gosub charge_arm %charge_mana
 
@@ -56,15 +51,14 @@ exp_check:
   return
 
 charge_arm:
-  put charge armband %charge_mana
+  put charge armband $1
   pause 0.5
-  wait
   gosub invoke_arm
   return
 
 invoke_arm:
   matchre invoke_arm but fail|accidentally attune yourself
-  matchre done readying all of its mana|you only are able to attune yourself|manage to attune yourself exactly as you intended to
+  matchre return readying all of its mana|you only are able to attune yourself|manage to attune yourself exactly as you intended to|
   pause 0.5
   put invoke my armband %charge_mana
   matchwait 30
@@ -73,7 +67,6 @@ invoke_arm:
 cast:
   put cast %spell_target
   pause 0.5
-  wait
   return
 
 done:
