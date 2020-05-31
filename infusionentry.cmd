@@ -1,4 +1,4 @@
-debuglevel 5
+# debuglevel 5
 
 match lookSymbol Roundtime
 match lookSymbol but it won't budge
