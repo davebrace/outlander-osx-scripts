@@ -1,7 +1,7 @@
-debuglevel 5
+# debuglevel 2
 
 var container $primary.container
-var hammer $forging.hammer
+var hammer hammer
 var item %1
 var book %2
 var mark $can.stamp

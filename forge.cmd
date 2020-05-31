@@ -1,12 +1,11 @@
-
-debuglevel 5
+# debuglevel 5
 
 var item %1
 var itemDesc
 var book weaponsmithing
 var count 1
 var current_count 0
-var primary.container $forging.container
+var primary.container backpack
 var smithspeed smith
 
 if_2 then
@@ -29,6 +28,11 @@ pugio:
 # 50-125
 kris:
   var itemDesc a metal kris
+  gosub book 1
+  goto %smithspeed
+
+sword:
+  var itemDesc a metal short sword
   gosub book 1
   goto %smithspeed
 
@@ -67,10 +71,54 @@ tasset:
   gosub book 1
   goto %smithspeed
 
+bardiche:
+  var itemDesc a metal bardiche
+  var book weaponsmithing
+  gosub book 7
+  goto %smithspeed
+
+spear:
+  var itemDesc a metal spear
+  var book weaponsmithing
+  gosub book 7
+  goto %smithspeed
+
+halberd:
+  var itemDesc a metal halberd
+  var book weaponsmithing
+  gosub book 7
+  goto %smithspeed
+
+hunthsleg:
+  var itemDesc a metal hunthsleg
+  var book weaponsmithing
+  gosub book 7
+  goto %smithspeed
+
 # 175 - 275
 broadsword:
   var itemDesc a metal broadsword
   gosub book 2
+  goto %smithspeed
+
+schiavona:
+  var itemDesc a metal schiavona
+  gosub book 2
+  goto %smithspeed
+
+tzece:
+  var itemDesc a metal tzece
+  gosub book 7
+  goto %smithspeed
+
+curlade:
+  var itemDesc a metal curlade
+  gosub book 1
+  goto %smithspeed
+
+scythe:
+  var itemDesc a metal scythe
+  gosub book 7
   goto %smithspeed
 
 # 250 - ?
