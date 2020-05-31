@@ -162,7 +162,7 @@ main:
     gosub disarm_ID
     if ("%mode" = "toss") then goto toss_box
     gosub disarm
-    if "%harvest" = "YES" then gosub analyze
+    if ("%harvest" = "YES" && $Locksmithing.LearningRate < 30) then gosub analyze
     if "%multi_trap" = "ON" then goto disarm_sub
   if %use_lockpick_ring = NO then gosub get_Pick
   lock_sub:
@@ -397,7 +397,13 @@ loot:
     var LAST get_Gem_Pouch
       matchre rt ^\.\.\.wait|^Sorry, you may only type
       match fill_Gem_Pouch You get
+      match remove_Gem_Pouch But that is already
     put get my %gempouch
+    matchwait
+  remove_Gem_Pouch:
+    var LAST remove_Gem_Pouch
+      match fill_Gem_Pouch You remove
+    put remove my %gempouch
     matchwait
   fill_Gem_Pouch:
     var LAST fill_Gem_Pouch
@@ -460,7 +466,7 @@ fix_Lock:
   return
 
 exp_Check:
-  if $Locksmithing.LearningRate >= 30 then goto done
+  ## if $Locksmithing.LearningRate >= 34 then goto done
   return
 
 return:
@@ -672,6 +678,10 @@ done:
   {
     gosub WEAR.ARMOR
   }
+  pause 1
+  put get pouch
+  pause 1
+  put wear pouch
   pause 1
   send #parse DISARM DONE
 exit
