@@ -96,6 +96,11 @@ hunthsleg:
   goto %smithspeed
 
 # 175 - 275
+condottiere:
+  var itemDesc a metal condottiere
+  gosub book 2
+  goto %smithspeed
+
 broadsword:
   var itemDesc a metal broadsword
   gosub book 2

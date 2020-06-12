@@ -1,29 +1,26 @@
 #
-#  hunt.cmd - version 0.6
-#  Requires Outlander 0.11.17 or higher
+#  hunt.cmd - version 0.7
+#  Requires Outlander 0.11.23 or higher
 #
-
-# debuglevel 5
 
 #
 #  User defined variables
 #
-var health_threshold 50
+var health_threshold 70
 var fatigue_threshold 70
 var should_loot_coins YES
 var should_loot_gems YES
-var should_loot_boxes NO
+var should_loot_boxes YES
 var loot_option loot
-var arrange 5
+var arrange $arrange_count
 var berserk_on_fatigue YES
 var fatigue_berserk avalanche
 var bard_scream havoc
 var sling_ammo shard
-var crossbow_ammo quadrello
-var slingbow_ammo shard
+var crossbow_ammo bolt
+var slingbow_ammo arrow
 var repating_crossbow_ammo_count 4
 var bow_ammo arrow
-var brawling_moves elbow|jab|kick|punch
 var diety Eluned
 var pray_messaging You offer
 
@@ -31,43 +28,52 @@ var pray_messaging You offer
 #
 #  Script Variables
 #
+
+
 var kill_count 0
 var use_offhand NO
-var check_exp NO
+var check_exp YES
 var exp_type
-var exp_threshold 15
+var exp_threshold 33
 var max_exp 34
 var weapon
 var attack_style attack
 var is_thrown NO
 var is_ranged NO
 var sheath_style sheath
-var should_stealth NO
+var should_stealth $train_stealth
 var FULL_AIM NO
 var ranged_hidden_attack poach
 var ranged_action
 var use_screams NO
 var hide_if_locked NO
-var arrange_action arrange
+var arrange_action arrange all
 var tm_mode NO
 var tm_spell
 var tm_mana
 var invoke_weapon NO
-var brawl NO
-var current_brawl_move 0
 var should_pray NO
 var last_prayer_timestamp 0
 var should_hunt NO
 var hunt_timer 75
-var last_hunt_timestamp 0
 var drop_skins NO
 
-# eval brawl_moves_count countsplit(%brawling_moves, "|")
+var brawl NO
+var brawling_move_count 0
+var brawling_moves circle|elbow|claw|kick|punch
+eval brawling_moves_max countsplit("%brawling_moves", "|")
+
+var rotating_attack_move_count 0
+var rotating_attack_weapons lance
+
+lance:
+  var rotating_attack_moves jab|thrust|jab|thrust|jab|lunge|jab|circle
+  eval rotating_attack_moves_max countsplit("%rotating_attack_moves", "|")
 
 #
 #  Critter variables
 #
-var skinnablecritters rat|hog|goblin|boar|eel|bobcat|cougar|reaver|wolf|snowbeast|gargoyle|togball|ape|tusky|wyvern
+var skinnablecritters rat|hog|goblin|boar|eel|bobcat|cougar|reaver|wolf|snowbeast|gargoyle|togball|ape|tusky|wyvern|warcat|lach|stalker|mastiff|gryphon|troll|firecat|blood warrior|shadow mage|gremlin|darvager|jackal|kobold|leucro|arbelog|ram|bear
 
 #
 #  Actions
@@ -82,6 +88,7 @@ action (skill) var skill Large_Edged when .*large edged skill\.$
 action (skill) var skill Small_Edged when .*small edged skills\.$|small edged skill\.$
 action (skill) var skill Twohanded_Edged when .*two-handed edged skill\.$
 action (skill) var skill Twohanded_Blunt when .*two-handed blunt skill\.$
+action (skill) var skill Brawling;var brawl YES when .*brawling skill\.$
 action (skill) var skill Staves when .*stave skill\.$
 action (skill) var skill Bow;var is_ranged YES;var ranged_ammo %bow_ammo when .*bow skill\.$
 action (skill) var skill Crossbow;var is_ranged YES;var ranged_ammo %crossbow_ammo when .*crossbow skill\.$
@@ -93,6 +100,7 @@ else {
   echo  *** You need to provide a weapon to use ***
   echo  *** .hunt spear
   echo  *** .hunt offhand nightstick
+  echo  *** .hunt tm stra 2 sword
   echo
   exit
 }
@@ -105,12 +113,17 @@ start:
       shift
       goto start.loop
     }
-  var weapon %1
-  gosub wield
+  if (%1 == Brawling) {
+    gosub brawl
+  } else {
+    var weapon %1
+    gosub wield 
+  }
   goto begin
 
 brawl:
   var brawl YES
+  var skill Brawling
   return
 
 throw:
@@ -186,7 +199,6 @@ pray:
 
 hunt:
   var should_hunt YES
-  var last_hunt_timestamp 0
   return
 
 arrange:
@@ -313,6 +325,10 @@ begin:
     goto brawling_combat
   }
 
+  if matchre("%weapon", "%rotating_attack_weapons") then {
+    goto rotating_combat
+  }
+
   goto attack
 
 attack:
@@ -332,7 +348,7 @@ attack:
   match do_get_thrown What are you trying to throw
   if %use_offhand == YES then put %attack_style left
   else put %attack_style
-  matchwait 10
+  matchwait 3
   goto attack
 
 do_get_thrown:
@@ -388,7 +404,7 @@ aim:
   matchre return best shot possible now|begin to target|You shift your
   matchre wait_for_mobs ^There is nothing else to face!|^What are you trying to attack
   send aim
-  matchwait 5
+  matchwait 3
   goto aim
 
 aim.fire:
@@ -473,11 +489,13 @@ stealth:
       goto stalk
     }
 
-  }
+  } 
+  gosub hide
+  return
 
 hide:
-
   # if (%guild = Thief || %guild = Ranger) && %circle >= 50 then goto stalk
+  if %hide_if_locked = NO && $Stealth.LearningRate >= 34 then return
 
   match hide ...
   matchre hide Your attempt to hide fails|notices your|ruining your hiding place
@@ -485,6 +503,7 @@ hide:
   pause 0.5
   put hide
   matchwait
+  return
 
 stalk:
   match stalk ...
@@ -493,6 +512,7 @@ stalk:
   pause 0.5
   put stalk
   matchwait
+  return
 
 check_loot:
   gosub get_thrown
@@ -544,6 +564,8 @@ tm_combat:
   pause 0.5
 
   if %guild = Bard && %use_screams = YES then gosub bard
+  if %guild = Cleric && %should_pray = YES then gosub cleric
+  if %should_hunt = YES then gosub do_hunt
 
   gosub tm_prep
   gosub tm_aiming
@@ -581,6 +603,43 @@ tm_quick_cast:
   pause 0.5
   goto tm_prep
 
+
+rotating_combat:
+  gosub clear
+  var last_combat rotating_combat
+
+  pause 0.5
+
+  if %guild = Bard && %use_screams = YES then gosub bard
+  if %guild = Cleric && %should_pray = YES then gosub cleric
+  if %should_hunt = YES then gosub do_hunt
+
+  if $hidden = 0 && %should_stealth = YES then gosub stealth
+
+  gosub rotating_attack
+  gosub check_loot
+
+  goto rotating_combat
+
+rotating_attack:
+  var attack_style %rotating_attack_moves[%rotating_attack_move_count]
+
+  matchre rotating_attack_next_move Roundtime
+  matchre wait_for_mobs There is nothing|close enough to attack|What are you trying to attack|It would help if you were closer
+  if %use_offhand == YES then put %attack_style left
+  else put %attack_style
+  matchwait 5
+  goto rotating_combat
+  return
+
+rotating_attack_next_move:
+  math rotating_attack_move_count add 1
+
+  if %rotating_attack_move_count >= %rotating_attack_moves_max then var rotating_attack_move_count 0
+
+  return
+
+
 #
 # Brawling
 #
@@ -593,21 +652,33 @@ brawling_combat:
   pause 0.5
 
   if %guild = Bard && %use_screams = YES then gosub bard
+  if %guild = Cleric && %should_pray = YES then gosub cleric
+  if %should_hunt = YES then gosub do_hunt
 
   if $hidden = 0 && %should_stealth = YES then gosub stealth
+
+  gosub brawling_attack
+  gosub check_loot
+
+  goto brawling_combat
+
+brawling_attack:
+  var attack_style %brawling_moves[%brawling_move_count]
 
   matchre brawling_next_move Roundtime
   matchre wait_for_mobs There is nothing|close enough to attack|What are you trying to attack|It would help if you were closer
   if %use_offhand == YES then put %attack_style left
   else put %attack_style
-  matchwait 10
-  goto brawling_combat
+  matchwait 5
+  goto brawling_attack
+  return
 
 brawling_next_move:
+  math brawling_move_count add 1
 
-  gosub check_loot
-  goto brawling_combat
+  if %brawling_move_count >= %brawling_moves_max then var brawling_move_count 0
 
+  return
 
 check_exp:
   if %check_exp = YES {
@@ -641,8 +712,9 @@ show_stats:
 
 skin:
   gosub do_arrange
+  pause 0.75
   send skin
-  pause 1.5
+  pause 2
   # if $righthand != %weapon then send empty right
   # if $lefthand != %weapon then send empty left
 
@@ -657,10 +729,11 @@ do_arrange:
   var count 0
   arrange.loop:
     if %count < %arrange {
-      matchre RETURN You complete arranging|That has already been arranged as much as you can manage|Arrange what
+      matchre return You complete arranging|That has already been arranged as much as you can manage|Arrange what
       matchre arrange_add Roundtime
       put %arrange_action
       matchwait 3
+      pause 1.25
       goto arrange.loop
     }
   return
@@ -733,19 +806,20 @@ cleric:
   return
 
 do_hunt:
-  if %last_hunt_timestamp < $gametime
+  if $last_hunt_timestamp < $gametime
   {
     put hunt
     pause 2
 
     var temp $gametime
     math temp add %hunt_timer
-    var last_hunt_timestamp %temp
+    put #var last_hunt_timestamp %temp
   }
   return
 
 health:
   if $health <= %health_threshold {
+    put #beep
     gosub clear
     goto abort
   }
@@ -830,7 +904,7 @@ abort:
 
 aborted:
   if %is_ranged = YES then gosub gather_ammo
-  gosub sheath_weapon
+  # gosub sheath_weapon
   put #parse HUNT ABORTED
   put look
   exit
@@ -848,13 +922,13 @@ sheath_weapon:
 wear_weapon:
   pause 0.5
   matchre stow_weapon You can't wear that!|can't wear any more items like that
-  matchre return You sling|Wear what?|You attach
+  matchre return You sling|Wear what?|You attach|You are already
   put wear my %weapon
   matchwait
 
 stow_weapon:
   pause 0.5
-  matchre return You put|easily strap|already in your inventory
+  matchre return You put|easily strap|already in your inventory|too long
   put stow my %weapon
   matchwait
 
@@ -862,12 +936,15 @@ end:
   if %is_ranged = YES then gosub gather_ammo
   put #script abort tmhelper
 
-  gosub sheath_weapon
+  # if %brawl = NO then {
+  #  gosub sheath_weapon
+  # }
 
-  if $righthand != Empty then send stow right
-  if $lefthand != Empty then send stow left
+  # if $righthand != Empty then send stow right
+  # if $lefthand != Empty then send stow left
 
   put look
 
   put #beep
   put #parse HUNT DONE
+

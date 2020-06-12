@@ -1,44 +1,61 @@
 # debuglevel 5
 var check_exp YES
 
+put #var train_stealth NO
+put #var destination Riverhaven
+put #var arrange_count 0
+
 start:
   put get pouch
   pause 0.5
   put wear pouch
   pause 0.5
 
-  put stance set 65 65 53 100
-  pause 0.5
-
-  gosub use_2hb
-  gosub train_weap
-
-  gosub summon_quarter
-  gosub train_weap
-  gosub break_weapon
-
-  gosub summon_polearm
-  gosub train_weap
-  gosub break_weapon
-
-  gosub use_2he
-  gosub train_weap 
-
-  gosub use_broad
-  gosub train_weap
-
-  put stance set 100 0 83 100
+  put stance set 100 0 84 100
   pause 0.5
 
   gosub use_ht
   gosub train_thrown_weap
+  put stow mallet
+
+  put stance set 62 60 62 100
+  pause 0.5
 
   gosub use_brawling
   gosub train_weap
 
+  gosub summon_weapon
+
+  gosub summon_broad
+  gosub train_weap
+
+  gosub summon_quarter
+  gosub train_weap
+
+  gosub summon_polearm
+  gosub train_weap
+
+  gosub summon_maul
+  gosub train_weap
+
+  gosub summon_blade
+  gosub train_weap 
+
+  gosub break_weapon
+
   gosub train_magic
 
   goto end
+
+summon_weapon:
+  put summon weapon
+  pause 2
+
+  put shape $righthand to fire
+  pause 2
+
+  return
+
 
 swap_greaves:
   put .swap_greaves
@@ -55,10 +72,7 @@ summon_quarter:
   var skill staves
   var weapon quarterstaff
 
-  put summon weapon %skill
-  pause 3
-
-  put shape %weapon to fire
+  put shape $righthand to %skill
   pause 2
 
   return
@@ -67,10 +81,7 @@ summon_polearm:
   var skill polearm
   var weapon lance
 
-  put summon weapon %skill
-  pause 3
-
-  put shape %weapon to fire
+  put shape $righthand to %skill
   pause 2
 
   return
@@ -80,39 +91,34 @@ break_weapon:
   pause 2
   return
 
-train_summoned:
-  var skill %1
-  var weapon %2
-
-  put summon weapon %skill
-  pause 3
-
-  put shape %weapon to electric
-  pause 3
-
-  gosub train_weap
-
-  put break %weapon
-  pause 0.5
-
-  return
-
-use_broad:
+summon_broad:
   var weapon broadsword
-  var summon NO
-  var skill HE
+  var skill Large Edged
+
+  put shape $righthand to %skill
+  pause 2
+
   return
 
-use_2hb:
-  var weapon flail
-  var summon NO
-  var skill "2HB"
+summon_maul:
+  var weapon maul
+  var skill Twohanded Blunt
+
+  put shape $righthand to %skill
+  pause 2
+
+  put push my maul
+  pause 1.5
+
   return
 
-use_2he:
-  var weapon sword
-  var summon NO
-  var skill "2HE"
+summon_blade:
+  var weapon blade
+  var skill Twohanded Edged
+
+  put shape $righthand to %skill
+  pause 2
+
   return
 
 use_brawling:
@@ -147,6 +153,8 @@ end:
   echo *** Weapons Mind Locked! ***
   put release cyclic
   pause 0.5
-  put #goto 199
+  put #var powerwalk 1
+  put #goto $destination
   waitforre ^YOU HAVE ARRIVED
+  put #var powerwalk 0
   put #flash

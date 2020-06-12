@@ -1,6 +1,6 @@
 # debuglevel 5
 
-var skinnablecritters rat|hog|goblin|boar|eel|bobcat|cougar|reaver|wolf|snowbeast|gargoyle|togball|ape|tusky|wyvern|firecat|troll|crocodile|bear|bobcat|sow|silverfish|ogre
+var skinnablecritters rat|hog|goblin|boar|eel|bobcat|cougar|reaver|wolf|snowbeast|gargoyle|togball|ape|tusky|wyvern|firecat|troll|crocodile|bear|bobcat|sow|silverfish|ogre|warcat
 
 start:
   goto analyze

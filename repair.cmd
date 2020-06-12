@@ -1,4 +1,3 @@
-
 var repairman %1
 var container $primary.container
 
@@ -111,6 +110,31 @@ dumas.combat.items:
   gosub give.repair greataxe
   gosub give.repair spear
   gosub give.repair club
+
+  goto done
+
+rifkk.combat.items:
+  gosub give.repair ring.vest
+  gosub give.repair ring.cap 
+  gosub give.repair ring.vambraces
+  gosub give.repair ring.aventail
+  gosub give.repair ring.mask
+  gosub give.repair ring.tasset
+  gosub give.repair plate.greaves
+  gosub give.repair parry.stick
+
+  gosub give.repair gladius
+  gosub give.repair falchion
+  gosub give.repair mace
+  gosub give.repair flail
+  gosub give.repair telek
+  gosub give.repair throwing.axe
+  gosub give.repair throwing.hammer
+  gosub give.repair nightstick
+  gosub give.repair mattock
+  gosub give.repair greataxe
+  gosub give.repair spear
+  gosub give.repair knuckles
 
   goto done
   

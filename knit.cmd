@@ -1,9 +1,13 @@
+var chapter 5
+var page 5
+var item mittens
+
 start:
   put get tailoring book
   pause 0.5
-  put turn book to chapter 5
+  put turn book to chapter %chapter
   pause 0.5
-  put turn book to page 1
+  put turn book to page %page
   pause 0.5
 
   put study book
@@ -11,7 +15,9 @@ start:
 
   pause 0.5
   put stow book
-  goto get_yarn
+
+  gosub get_yarn
+
   pause 0.5
   put get needles
   pause 0.5
@@ -22,6 +28,8 @@ start:
   pause 0.5
   put stow yarn
   pause 0.5
+
+  goto knit_needles
 
 get_yarn:
   pause 0.5
@@ -75,7 +83,7 @@ cast:
   wait
   put swap
   pause 0.5
-  put drop ankle
+  put drop %item
   pause 0.5
   put swap
   pause 0.5

@@ -34,12 +34,13 @@ var is_ranged NO
 var sheath_style sheath
 var FULL_AIM NO
 var hide_if_locked NO
-var arrange_action arrange
+var arrange $arrange_count
+var arrange_action arrange all
 
 #
 #  Critter variables
 #
-var skinnablecritters rat|hog|goblin|boar|eel|bobcat|cougar|reaver|wolf|snowbeast|gargoyle|togball|ape|tusky|wyvern|firecat|troll|crocodile|silverfish|bear|ogre
+var skinnablecritters rat|hog|goblin|boar|eel|bobcat|cougar|reaver|wolf|snowbeast|gargoyle|togball|ape|tusky|wyvern|firecat|troll|crocodile|silverfish|bear|ogre|warcat|lach|darvager|leucro
 
 #
 #  Actions
@@ -208,6 +209,7 @@ attack:
 
   matchre check_loot Roundtime
   matchre wait_for_mobs There is nothing|close enough to attack|What are you trying to attack|It would help if you were closer
+  matchre get_thrown_retry What are you trying to throw
   if %use_offhand == YES then put %attack_style left
   else put %attack_style
   matchwait 10
@@ -355,8 +357,15 @@ check_loot:
   goto %last_combat
 
 get_thrown:
+  pause 0.75
   if %is_thrown = YES then put get my %weapon
   return
+
+get_thrown_retry:
+  pause 0.75
+  if %is_thrown = YES then put get my %weapon
+  goto attack
+
 
 check_exp:
   if %check_exp = YES {
@@ -398,12 +407,18 @@ do_arrange:
   var count 0
   arrange.loop:
     if %count < %arrange {
+      matchre return You complete arranging|That has already been arranged as much as you can manage|Arrange what
+      matchre arrange_add Roundtime
       put %arrange_action
-      pause 2
-      math count add 1
+      matchwait 3
+      pause 1.25
       goto arrange.loop
     }
   return
+
+arrange_add:
+  math count add 1
+  goto arrange.loop
 
 handle_loot:
   pause 1

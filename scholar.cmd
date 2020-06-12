@@ -2,13 +2,9 @@ var chap 1
 var page 1
 
 var book $scholar.book
-var play_song YES
+var play_song NO
 
-var maxexp $Scholarship.LearningRate
-math maxexp add 12
-if %maxexp >= 34 then {
-	var maxexp 34
-}
+var maxexp 34
 
 action var play_song YES when You finish playing
 

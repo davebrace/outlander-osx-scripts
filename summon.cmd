@@ -2,18 +2,32 @@
 # debuglevel 5
 
 start:
+  put pathway focus defend
+  pause 1
   goto summon
 
 summon:
+  var LAST summon
   gosub clear
-  matchre summon gather a bigger charge
+  gosub check_exp
   matchre move_out so heavily embody|reached your limit
+  matchre rt Roundtime|...wait
   put summon admittance 
-  matchwait 30
+  matchwait 
   goto summon
+
+rt:
+  pause
+  goto %LAST
+
+check_exp:
+  if $Summoning.LearningRate > 32 then {
+    put pathway stop 
+  }
+  return
 
 move_out:
   put stand
-  pause 1
+  pause 0.5
   put #flash
   put #parse SUMMONING DONE

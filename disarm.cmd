@@ -152,6 +152,7 @@ no_More_Stowing:
   goto done
 
 main:
+  gosub clear
   if ("%box_popping" != "ON") then gosub container_Check1
   disarm_sub:
     if ("$lefthand" = "Empty") then

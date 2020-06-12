@@ -1,20 +1,21 @@
 # debuglevel 5 
 
 start:
-  put get broad
+  put get mallet
   pause 0.5
   goto use_armband
 
 use_armband:
+  gosub clear
   gosub exp_check
 
   gosub cast_spell etf 15 5 5 fire
 
-  gosub cast_spell sw 5 25 10
-  gosub cast_spell suf 5 25 10
+  gosub cast_spell sw 5 26 11
+  gosub cast_spell suf 5 26 11
 
   gosub cast_spell es 1 25 8
-  gosub cast_spell ignite 5 15 8 broad
+  gosub cast_spell ignite 5 15 8 mallet
 
   goto use_armband
 
@@ -48,6 +49,7 @@ cast_spell:
   return
 
 harness:
+  pause 0.25
   matchre return You tap into
   matchre harness ...wait
   put harness %harness_mana
@@ -59,6 +61,7 @@ exp_check:
   return
 
 charge_arm:
+  pause 0.25
   matchre return You harness
   matchre charge_arm ...wait
   put charge armband %charge_mana
@@ -66,6 +69,7 @@ charge_arm:
   return
 
 invoke_arm:
+  pause 0.25
   matchre invoke_arm but fail|accidentally attune yourself|...wait
   matchre return readying all of its mana|you only are able to attune yourself|manage to attune yourself exactly as you intended to|
   put invoke my armband %charge_mana
@@ -81,7 +85,7 @@ done:
   return
 
 move_out:
-  put sheath broad in baldric
+  put stow mallet
   pause 2
   put #parse ARCANA DONE
   put #flash
