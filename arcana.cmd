@@ -9,10 +9,10 @@ use_armband:
   gosub clear
   gosub exp_check
 
-  gosub cast_spell etf 15 5 5 fire
+  gosub cast_spell etf 15 9 5 fire
 
-  gosub cast_spell sw 5 26 11
-  gosub cast_spell suf 5 26 11
+  gosub cast_spell sw 5 32 11
+  gosub cast_spell suf 5 32 11
 
   gosub cast_spell es 1 25 8
   gosub cast_spell ignite 5 15 8 mallet

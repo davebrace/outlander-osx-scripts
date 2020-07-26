@@ -4,8 +4,8 @@
 #debuglevel 5
 
 ## Character specific variables
-var container1 $primary.container
-var container2 $secondary.container
+var container1 $secondary.container
+var container2 belt
 var containerToUse %container1
 var componentcontainer $primary.container
 var gempouch $gem.pouch
@@ -27,8 +27,8 @@ if ($Locksmithing.Ranks >= 15) then
   action (disarm) var mode careful when with only minor troubles|got a good shot at|some chance of being able|with persistence you believe you could|would be a longshot|minimal chance|You really don't have any chance|Prayer would be a good start
   action (disarm) var mode toss when You could just jump off a cliff|same shot as a snowball|pitiful snowball encased in the Flames
 
-  action (picklock) var mode blind when is a laughable matter|The lock is a trivially constructed piece of junk barely worth your time|An aged grandmother could
-  action (picklock) var mode quick when will be a simple matter for you to
+  action (picklock) var mode blind when is a laughable matter|An aged grandmother could
+  action (picklock) var mode quick when will be a simple matter for you to|The lock is a trivially constructed piece of junk barely worth your time
   action (picklock) var mode normal when should not take long with your skills|is precisely at your skill level|with only minor troubles
   action (picklock) var mode careful when got a good shot at|some chance of being able|with persistence you believe you could|would be a longshot|minimal chance|You really don't have any chance|Prayer would be a good start
   action (picklock) var mode toss when You could just jump off a cliff|same shot as a snowball|pitiful snowball encased in the Flames
@@ -46,7 +46,7 @@ var component_list tube|needle|seal|bladder|studs|blade|\brune\b|spring|hammer|d
 var multi_trap ON
 var multi_lock ON
 var thief_hide NO
-var harvest YES
+var harvest NO
 var dismantle
 var box_popping OFF
 var check_for_boxes YES
@@ -370,7 +370,7 @@ pick_ID:
   put pick ID
   matchwait
 
-pick:
+pick_anal:
   var LAST pick
   var multi_lock OFF
     matchre rt ^\.\.\.wait|^Sorry, you may only type
@@ -378,13 +378,16 @@ pick:
     matchre pick_Cont Roundtime|has already helpfully been analyzed
   put pick anal
   matchwait
-pick_Cont:
+pick:
+  var multi_lock OFF
+  var LAST pick
+
   if ( %use_lockpick_ring = NO && "$righthand" = "Empty") then gosub get_Pick
-  var LAST pick_Cont
-    matchre rt ^\.\.\.wait|^Sorry, you may only type
-    match pick_cont You are unable to make
-    matchre return With a soft click|not even locked|Roundtime
+  matchre rt ^\.\.\.wait|^Sorry, you may only type
+  match pick You are unable to make
+  matchre return With a soft click|not even locked|Roundtime
   put pick %mode
+
   matchwait
 
 loot:

@@ -23,3 +23,4 @@ automapper:
   return
 
 end:
+  put #flash

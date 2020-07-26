@@ -1,6 +1,6 @@
 start:
   put rem greaves
-  pause 3
+  pause 3.5
   put stow greaves
   pause 0.5
 
@@ -37,6 +37,6 @@ start:
   pause 0.5
   
   put wear %armor
-  pause 3
+  pause 3.5
 
   put #parse GREAVES SWAPPED

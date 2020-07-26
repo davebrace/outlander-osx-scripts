@@ -2,18 +2,15 @@
 
 var cast_count 0
 
-var skinnablecritters rat|hog|goblin|boar|eel|bobcat|cougar|reaver|wolf|snowbeast|gargoyle|togball|ape|tusky|wyvern|firecat|troll|crocodile|bear|ogre|leucro|lach|warcat|stalker|gryphon|darvager|leucro
+var skinnablecritters rat|hog|goblin|boar|eel|bobcat|cougar|reaver|wolf|snowbeast|gargoyle|togball|ape|tusky|wyvern|firecat|troll|crocodile|bear|ogre|leucro|lach|warcat|stalker|gryphon|darvager|leucro|deer
 
 start:
   put .swap_greaves
   waitforre GREAVES SWAPPED
 
-  put wield broadsword
-  pause 0.5
-
   put release cyclic
 
-  put stance set 70 61 51 100
+  put stance set 62 60 63 100
   pause 1
 
   goto debuff
@@ -39,7 +36,7 @@ target:
 
   gosub prep_tm
 
-cast_fire:
+cast_eth:
   put cast fire
   pause 0.5
   return
@@ -49,11 +46,11 @@ cast:
   match return You gesture
   match cast ...wait
   put cast
-  matchwait 3
+  matchwait 1
   return
 
 cast_eth_fissure:
-  gosub set_charge_mana 9
+  gosub set_charge_mana 15
 
   gosub check_mana
 
@@ -61,10 +58,10 @@ cast_eth_fissure:
 
   gosub use_cambrinth
 
-  matchre cast_fire You feel fully prepared
+  matchre cast_eth You feel fully prepared
   matchwait 30 
   if "$preparedspell" != "None" then {
-    gosub cast_fire
+    gosub cast_eth
   }
   return
 
@@ -73,7 +70,7 @@ cast_tm:
   gosub harness_tm
 
   matchre cast You feel fully prepared|formation of a targeting pattern|target pattern has finished forming
-  matchwait 3
+  matchwait 6
   if "$preparedspell" != "None" then {
     gosub cast
   }
@@ -83,44 +80,26 @@ harness_tm:
   pause 0.25
   match return You tap into the mana
   match harness_tm ...wait
-  put harness 13
+  put harness 16
   matchwait 5
   return
 
 prep_tm:
   pause 0.5
-  gosub set_charge_mana 15
+  gosub set_charge_mana 20
 
   gosub check_mana
 
-  gosub targ_fb
+  gosub targ_tm
 
   return
 
-targ_fb:
-  matchre targ_fb ...wait
+targ_tm:
+  matchre targ_tm ...wait
   matchre no_creature What are you trying to attack
-  matchre cast_tm target pattern around
+  matchre cast_tm target pattern around|targeting pattern centered
   put targ fb 15
   matchwait 2
-
-prep_spell:
-  gosub set_spell $1
-  gosub set_prep_mana $2
-  gosub set_charge_mana $3
-
-  gosub check_mana
-
-  put prep %spell_name %prep_mana
-
-  gosub use_cambrinth
-
-  matchre cast You feel fully prepared|formation of a targeting pattern|target pattern has finished forming
-  matchwait 15
-  if "$preparedspell" != "None" then {
-    gosub cast
-  }
-  return
 
 no_creature:
   if "$preparedspell" != "None" then {
@@ -170,33 +149,18 @@ check_exp:
   return
 
 skin:
-  # pause 0.5
-  # gosub do_arrange
   pause 0.5
   send skin
   pause 2
-  return
-
-do_arrange:
-  put arrange all
-  pause 5
   return
 
 loot:
   pause 0.5
   put loot
   pause 0.5
-  gosub loot_coins
   gosub loot_gems
   gosub loot_boxes
   return
-
-loot_coins:
-  matchre loot_coins You pick up
-  matchre RETURN I could not find|What were you referring
-  send get coin
-  matchwait 3
-  goto loot_coins
 
 loot_gems:
   matchre loot_gems You pick up
@@ -218,7 +182,7 @@ check_loot:
   goto target 
 
 check_mana:
-  if $mana <= 25 {
+  if $mana <= 24 {
     echo  *** Recovering mana ***
     pause 0.5
     send bob
@@ -263,8 +227,6 @@ RETURN:
 
 end:
   put release cyclic
-  pause 0.5
-  put sheath my broadsword in my bald
   pause 0.5
   put pathway stop
   pause 0.5

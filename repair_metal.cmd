@@ -1,12 +1,18 @@
-debuglevel 2
+# debuglevel 2
 var person %1
 
+if_1 then goto start
+else {
+  echo  *** You need to provide the name of the repair person ***
+  exit
+}
+
 start:
-  gosub repair_item vest
-  gosub repair_item cap
-  gosub repair_item tasset
-  gosub repair_item vambraces
-  gosub repair_item aventail
+  gosub repair_item shield
+  gosub repair_item stick
+  gosub repair_item shirt
+  gosub repair_item balaclava
+  gosub repair_item gloves
 
   var scale_greaves scale greaves
   gosub repair_item %scale_greaves
@@ -14,13 +20,8 @@ start:
   var light_greaves light greaves
   gosub repair_item %light_greaves
 
-  gosub repair_item gloves
-  gosub repair_item shield
-  gosub repair_item mask
-  gosub repair_item stick
   pause 120
   goto retrieve_items
-
 
 repair_item:
   var item $0
@@ -36,7 +37,7 @@ repair_item:
 
 remove: 
   pause 0.5
-  matchre return You remove
+  matchre return You remove|You loosen|You work your way|You take a|You pull off
   matchre get_item Remove what
   matchre remove ...wait
   put remove %item
@@ -57,12 +58,12 @@ get_ticket:
 
 stow_righthand:
   pause 0.25
-  put stow $righthand
-  goto rerieve_items
+  put stow right
+  goto retrieve_items
 
 wear_item:
-  matchre stow_righthand fit over the 
-  matchre return You attach|You slip|You put|You work your way|You slide|You hang
+  matchre stow_righthand fit over the|You can't wear that!
+  matchre return You attach|You slip|You put|You work your way|You slide|You hang|You strap
   put wear right
   matchwait 3
   return

@@ -8,7 +8,7 @@
 #
 var health_threshold 70
 var fatigue_threshold 70
-var should_loot_coins YES
+var should_loot_coins NO
 var should_loot_gems YES
 var should_loot_boxes YES
 var loot_option loot
@@ -17,7 +17,7 @@ var berserk_on_fatigue YES
 var fatigue_berserk avalanche
 var bard_scream havoc
 var sling_ammo shard
-var crossbow_ammo bolt
+var crossbow_ammo shard
 var slingbow_ammo arrow
 var repating_crossbow_ammo_count 4
 var bow_ammo arrow
@@ -34,7 +34,7 @@ var kill_count 0
 var use_offhand NO
 var check_exp YES
 var exp_type
-var exp_threshold 33
+var exp_threshold $exp_threshold
 var max_exp 34
 var weapon
 var attack_style attack
@@ -73,7 +73,7 @@ lance:
 #
 #  Critter variables
 #
-var skinnablecritters rat|hog|goblin|boar|eel|bobcat|cougar|reaver|wolf|snowbeast|gargoyle|togball|ape|tusky|wyvern|warcat|lach|stalker|mastiff|gryphon|troll|firecat|blood warrior|shadow mage|gremlin|darvager|jackal|kobold|leucro|arbelog|ram|bear
+var skinnablecritters rat|hog|goblin|boar|eel|bobcat|cougar|reaver|wolf|snowbeast|gargoyle|togball|ape|tusky|wyvern|warcat|lach|stalker|mastiff|gryphon|troll|firecat|blood warrior|shadow mage|gremlin|darvager|jackal|kobold|leucro|arbelog|ram|bear|deer|serpent|shalswar|peccary
 
 #
 #  Actions
@@ -146,9 +146,6 @@ hurl:
   return
 
 offhand:
-  echo
-  echo  *** Offhand ***
-  echo
   var use_offhand YES
   return
 
@@ -235,13 +232,13 @@ boxes:
 
 wield:
 
-  if "%weapon" = "log" || "%weapon" = "rock" then goto appraise_weapon
+  if "%weapon" = "mallet" || "%weapon" = "bola" then goto appraise_weapon
 
   matchre appraise_weapon You draw|You slip|already holding|You deftly
   matchre remove_weapon remove it first
   matchre no_weapon Wield what?
   matchre get_weapon as it is lying at your feet
-  send wield %weapon
+  send wield my %weapon
   matchwait
 
 get_weapon:
@@ -259,17 +256,21 @@ appraise_weapon:
   if matchre("$righthand", "slingbow") then var ranged_ammo %slingbow_ammo
 
   if %use_offhand = YES {
-    var skill Offhand
+    var skill Offhand_Weapon
     goto display_weapon
   }
 
-  if %weapon = log {
+  if "%weapon" = "hammer" {
     var skill Heavy_Thrown
+    var is_thrown YES
+    var attack_style throw
     goto display_weapon
   }
 
-  if %weapon = rock {
+  if "%weapon" = "club" {
     var skill Light_Thrown
+    var is_thrown YES
+    var attack_style throw
     goto display_weapon
   }
 
@@ -312,7 +313,7 @@ begin:
   if %is_ranged = YES then {
     action (ranged) var FULL_AIM YES when You think you have your best shot possible
     action (ranged) var FULL_AIM NO when stop concentrating on aiming
-    if %should_stealth != YES then { put .tmhelper }
+    if $train_stealth != YES then { put .tmhelper }
     goto ranged_combat
   }
 
@@ -341,7 +342,7 @@ attack:
   if %guild = Cleric && %should_pray = YES then gosub cleric
   if %should_hunt = YES then gosub do_hunt
 
-  if $hidden = 0 && %should_stealth = YES then gosub stealth
+  if $hidden = 0 && $train_stealth = YES then gosub stealth
 
   matchre check_loot Roundtime
   matchre wait_for_mobs There is nothing|close enough to attack|What are you trying to attack|It would help if you were closer
@@ -379,7 +380,7 @@ ranged_combat:
 
   gosub load
   gosub aim
-  if %should_stealth = YES then gosub stealth
+  if $train_stealth = YES then gosub stealth
   gosub aiming
   gosub fire
 
@@ -614,7 +615,7 @@ rotating_combat:
   if %guild = Cleric && %should_pray = YES then gosub cleric
   if %should_hunt = YES then gosub do_hunt
 
-  if $hidden = 0 && %should_stealth = YES then gosub stealth
+  if $hidden = 0 && $train_stealth = YES then gosub stealth
 
   gosub rotating_attack
   gosub check_loot
@@ -655,7 +656,7 @@ brawling_combat:
   if %guild = Cleric && %should_pray = YES then gosub cleric
   if %should_hunt = YES then gosub do_hunt
 
-  if $hidden = 0 && %should_stealth = YES then gosub stealth
+  if $hidden = 0 && $train_stealth = YES then gosub stealth
 
   gosub brawling_attack
   gosub check_loot
@@ -820,6 +821,7 @@ do_hunt:
 health:
   if $health <= %health_threshold {
     put #beep
+    put #flash
     gosub clear
     goto abort
   }
@@ -894,6 +896,7 @@ abort:
 
     math abort_count add 1
     put #beep
+    put #flash
     echo
     echo  *** Seek medical attention!  $health/100  ***
     echo
@@ -943,8 +946,4 @@ end:
   # if $righthand != Empty then send stow right
   # if $lefthand != Empty then send stow left
 
-  put look
-
-  put #beep
   put #parse HUNT DONE
-
