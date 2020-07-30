@@ -21,8 +21,8 @@ aeg:
 
 prep_aeg:
   pause 0.5
-  match prep_aeg ...wait
   match return You trace a hasty sigil in the air, shaping the pattern of the Aegis of Granite spell
+  matchre prep_aeg ...wait|Sorry, you may only type ahead
   match aeg You are already
   put prep aeg 340
   matchwait
@@ -30,12 +30,15 @@ prep_aeg:
 
 invoke:
   put #script pause hunt
+  pause 1
   gosub lower_right
   gosub remove_clasp
   gosub invoke_clasp
   gosub wear_clasp
   gosub get_right
   put #script resume hunt
+  put aim
+  pause 0.5
   return
 
 lower_right:
@@ -62,21 +65,21 @@ get_right:
 remove_clasp:
   pause 0.1
   match return You take off a luminous
-  match ...wait remove_clasp
+  match remove_clasp ...wait
   put remove clasp
   matchwait
 
 wear_clasp:
   pause 0.1
   match return You put on a luminous
-  match ...wait wear_clasp
+  match wear_clasp ...wait
   put wear clasp
   matchwait
 
 invoke_clasp:
   pause 0.1
   match return You make sweeping
-  match ...wait invoke_clasp
+  match invoke_clasp ...wait
   put invoke clasp
   matchwait
 

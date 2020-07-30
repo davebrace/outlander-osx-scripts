@@ -20,8 +20,8 @@ es:
 
 prep_es:
   pause 0.5
-  match prep_es ...wait
   match return You trace a hasty sigil in the air, shaping the pattern of the Ethereal Shield spell
+  matchre prep_es ...wait|Sorry, you may only type ahead
   match es You are already
   put prep es 47
   matchwait
@@ -29,7 +29,7 @@ prep_es:
 
 cast:
   pause 0.25
-  match cast ...wait
+  matchre cast ...wait|Sorry, you may only type ahead 1 command
   match return A shimmering ethereal shield surrounds you.
   match es backfires
   put cast

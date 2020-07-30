@@ -29,18 +29,20 @@ start:
   put .ignite
   pause 1
 
+  put stance set 62 60 63 100
+  pause 0.5
+
+  var skill small blunt
+  var weapon war hammer
+  gosub train_weap
+  put stow war hammer
+  pause 0.5
+
   put summon weapon
   pause 2
 
   put shape $righthand to fire
   pause 2
-
-  put stance set 62 60 63 100
-  pause 0.5
-
-  var skill small blunt
-  var weapon mallet
-  gosub train_summoned_weap
 
   var skill large blunt
   var weapon hara
@@ -57,6 +59,9 @@ start:
 
   put stance set 100 0 85 100
   pause 0.5
+
+  put .tw
+  pause 1
 
   var skill light thrown
   var weapon club
@@ -86,6 +91,7 @@ start:
   put wear slingshot
   pause 0.5
 
+  put #script abort tw
   goto end
 
 use_sling:
@@ -128,7 +134,7 @@ swap_greaves:
   return
 
 train_weap:
-  put .hunt %weapon
+  put .hunt "%weapon"
   waitforre ^HUNT DONE
   echo *** %weapon MINDLOCKED ***
   pause 0.5
@@ -142,6 +148,7 @@ end:
   put #script abort mof
   put #script abort es
   put #script abort etf
+  put #script abort tw
   pause 0.5
   put #var powerwalk 1
   put #goto $destination

@@ -5,7 +5,7 @@ put #var destination 33
 put #var arrange_count 0
 put #var exp_threshold 34
 
-put .mof
+put .aeg
 pause 0.5
 put .sw
 pause 0.5
@@ -24,6 +24,18 @@ start:
   put wear pouch
   pause 0.5
 
+  put stance set 100 0 85 100
+  pause 0.5
+
+  put .tw
+  pause 0.5
+
+  gosub use_ht
+  gosub train_weap
+  put stow hammer
+
+  put #script abort tw
+
   put stance set 62 60 63 100
   pause 0.5
 
@@ -32,40 +44,31 @@ start:
   put stow dagesse
   pause 0.5
 
-  gosub use_maul
-  gosub train_weap
-  put put maul in harness
-  pause 0.5
-
   gosub use_polearm 
   gosub train_weap
   put put voulge in harness
   pause 0.5
 
-  gosub summon_weapon
+  gosub use_maul
+  gosub train_weap
+  put put maul in harness
+  pause 0.5
 
-  gosub summon_quarter
+  gosub use_staff
+  gosub train_weap
+  put put staff in harness
+  pause 0.5
+
+  gosub use_brawling
   gosub train_weap
 
-  gosub break_weapon
+  put stance set 62 60 63 100
+  pause 0.5
 
   gosub use_2he 
   gosub train_weap 
   put put flamberge in harness
   pause 0.5
-
-  put stance set 100 0 85 100
-  pause 0.5
-
-  gosub use_ht
-  gosub train_weap
-  put stow hammer
-
-  put stance set 62 60 63 100
-  pause 0.5
-
-  gosub use_brawling
-  gosub train_weap
 
   gosub train_magic
 
@@ -100,9 +103,16 @@ use_maul:
   return
 
 use_ht:
-  var weapon hammer
+  var weapon throwing hammer
   var skill heavy thrown
   put get throwing hammer
+  pause 0.5
+  return
+
+use_staff:
+  var weapon staff
+  var skill staves
+  put get staff
   pause 0.5
   return
 
@@ -138,7 +148,7 @@ use_brawling:
 
 train_weap:
   gosub swap_greaves
-  put .hunt %weapon 
+  put .hunt "%weapon"
   waitforre ^HUNT DONE
   echo *** %weapon MINDLOCKED ***
   pause 0.5
@@ -147,7 +157,7 @@ train_weap:
 train_magic:
   put #script abort sw
   put #script abort suf
-  put #script abort mof
+  put #script abort aeg
   put #script abort ignite
   put #script abort es
   put .hunt_magic
@@ -161,10 +171,11 @@ end:
   put #var powerwalk 1
   put #script abort sw
   put #script abort suf
-  put #script abort mof
+  put #script abort aeg
   put #script abort ignite
   put #script abort etf
   put #script abort es
+  put #script abort tw
 
   put release cyclic
   pause 0.5

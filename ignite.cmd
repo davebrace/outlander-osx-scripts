@@ -25,8 +25,8 @@ ignite:
 
 prep_ignite:
   pause 0.5
-  match prep_ignite ...wait
   match return You trace a hasty sigil in the air, shaping the pattern of the Ignite spell
+  matchre prep_ignite ...wait|Sorry, you may only type ahead
   match ignite You are already
   put prep ignite 39
   matchwait

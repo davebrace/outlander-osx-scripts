@@ -20,16 +20,16 @@ rm:
 
 prep_rm:
   pause 0.5
-  match prep_rm ...wait
   match return You trace a hasty sigil in the air, shaping the pattern of the Rising Mists spell
+  matchre prep_rm ...wait|Sorry, you may only type ahead
   match rm You are already
-  put prep rm 32
+  put prep rm 33
   matchwait
   return
 
 cast:
   pause 0.25
-  match cast ...wait
+  matchre cast ...wait|Sorry, you may only type ahead 1 command
   match return A wispy, grey mist silently rises, droplet by droplet.
   match rm backfires
   put cast

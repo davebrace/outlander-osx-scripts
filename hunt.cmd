@@ -260,7 +260,7 @@ appraise_weapon:
     goto display_weapon
   }
 
-  if "%weapon" = "hammer" {
+  if "%weapon" = "throwing hammer" {
     var skill Heavy_Thrown
     var is_thrown YES
     var attack_style throw

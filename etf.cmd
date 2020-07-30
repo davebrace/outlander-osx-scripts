@@ -6,8 +6,8 @@ etf:
     goto etf
   }
 
-  if $mana <= 80 then {
-    pause 10
+  if $mana <= 60 then {
+    pause 15
     goto etf
   }
 
@@ -20,10 +20,10 @@ etf:
 
 prep_etf:
   pause 0.5
-  match prep_etf ...wait
   match return You trace a hasty sigil in the air, shaping the pattern of the Ethereal Fissure spell
+  matchre prep_suf ...wait|Sorry, you may only type ahead
   match etf You are already
-  put prep etf 31
+  put prep etf 33
   matchwait
   return
 

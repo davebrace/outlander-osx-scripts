@@ -193,16 +193,16 @@ container_Check1:
   var containerToUse %container1
   pause 1
     matchre get_For_Disarm (coffer|trunk|chest|strongbox|skippet|caddy|crate|casket|coffin|\bbox\b)
-    match container_Check2 Encumbrance
-  put rummage /b my %container1;enc
+    match container_Check2 there is nothing in there like that
+  put rummage /b my %container1
   matchwait
 
 container_Check2:
   var containerToUse %container2
   pause 1
     matchre get_For_Disarm (coffer|trunk|chest|strongbox|skippet|caddy|crate|casket|coffin|\bbox\b)
-    match done Encumbrance
-  put rummage /b my %container2;enc
+    match done there is nothing in there like that
+  put rummage /b my %container2
   matchwait
 
 get_For_Disarm:

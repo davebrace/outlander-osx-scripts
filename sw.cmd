@@ -20,16 +20,16 @@ sw:
 
 prep_sw:
   pause 0.5
-  match prep_sw ...wait
   match return You trace a hasty sigil in the air, shaping the pattern of the Swirling Winds spell
+  matchre prep_sw ...wait|Sorry, you may only type ahead
   match sw You are already
-  put prep sw 56
+  put prep sw 58
   matchwait
   return
 
 cast:
   pause 0.25
-  match cast ...wait
+  matchre cast ...wait|Sorry, you may only type ahead 1 command
   match return allowing you to dodge more easily
   matchre sw backfires|are too mentally fatigued to finish the pattern
   put cast
