@@ -1,40 +1,25 @@
 var check_exp YES
 
 put #var train_stealth NO
-put #var destination 33
+put #var destination Hib
 put #var arrange_count 0
 put #var exp_threshold 34
 
 put .aeg
-pause 0.5
-put .sw
-pause 0.5
-put .suf
-pause 0.5
-put .ignite
-pause 0.5
-put .etf
-pause 0.5
-put .es
-pause 0.5
+pause 3
+put .delay_30 sw
+put .delay_60 suf
+put .delay_90 etf
+put .delay_120 ignite 
+put .delay_150 es
+put .delay_180 zephyr
+put .delay_240 fb
 
 start:
   put get pouch
   pause 0.5
   put wear pouch
   pause 0.5
-
-  put stance set 100 0 85 100
-  pause 0.5
-
-  put .tw
-  pause 0.5
-
-  gosub use_ht
-  gosub train_weap
-  put stow hammer
-
-  put #script abort tw
 
   put stance set 62 60 63 100
   pause 0.5
@@ -68,6 +53,21 @@ start:
   gosub use_2he 
   gosub train_weap 
   put put flamberge in harness
+  pause 0.5
+
+  put stance set 100 0 85 100
+  pause 0.5
+
+  put .tw
+  pause 0.5
+
+  gosub use_ht
+  gosub train_weap
+  put stow hammer
+
+  put #script abort tw
+
+  put stance set 62 60 63 100
   pause 0.5
 
   gosub train_magic
@@ -160,6 +160,8 @@ train_magic:
   put #script abort aeg
   put #script abort ignite
   put #script abort es
+  put #script abort tw
+  put #script abort fb
   put .hunt_magic
   waitforre ^HUNT DONE
   pause 0.5
@@ -176,6 +178,7 @@ end:
   put #script abort etf
   put #script abort es
   put #script abort tw
+  put #script abort fb
 
   put release cyclic
   pause 0.5

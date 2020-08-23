@@ -1,18 +1,18 @@
 ignite:
   gosub clear
 
+  if "$righthand" = "Empty" then {
+    pause 60
+    goto ignite
+  }
+
   if "$preparedspell" != "None" then {
-    pause 20
+    pause 30
     goto ignite
   }
 
   if $mana <= 80 then {
     pause 10
-    goto ignite
-  }
-
-  if "$righthand" = "Empty" then {
-    pause 30
     goto ignite
   }
 
@@ -28,7 +28,7 @@ prep_ignite:
   match return You trace a hasty sigil in the air, shaping the pattern of the Ignite spell
   matchre prep_ignite ...wait|Sorry, you may only type ahead
   match ignite You are already
-  put prep ignite 39
+  put prep ignite 52
   matchwait
   return
 
@@ -38,7 +38,7 @@ cast:
   match return Tendrils of flame dart along your hand toward
   match release think you can manage to ignite another weapon at the moment
   match ignite backfires
-  put cast $righthand
+  put cast $righthandnoun
   matchwait
   return
 

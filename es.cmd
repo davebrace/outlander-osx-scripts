@@ -6,8 +6,8 @@ es:
     goto es
   }
 
-  if $mana <= 90 then {
-    pause 30
+  if $mana <= 85 then {
+    pause 10
     goto es
   }
 
@@ -23,7 +23,7 @@ prep_es:
   match return You trace a hasty sigil in the air, shaping the pattern of the Ethereal Shield spell
   matchre prep_es ...wait|Sorry, you may only type ahead
   match es You are already
-  put prep es 47
+  put prep es 62
   matchwait
   return
 

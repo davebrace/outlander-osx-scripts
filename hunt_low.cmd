@@ -1,20 +1,17 @@
 # debuglevel 5
 
 put #var train_stealth NO
-put #var destination 33
+put #var destination hib
 put #var arrange_count 1
 put #var exp_threshold 34
 
 put .mof
-pause 1
-put .sw
-pause 1
-put .suf
-pause 1
-put .etf
-pause 1
-put .es
-pause 1
+pause 3
+put .delay_30 sw
+put .delay_60 suf
+put .delay_90 etf
+put .delay_150 es
+put .delay_180 zephyr
 
 start:
   put rem greaves
@@ -22,9 +19,43 @@ start:
   put stow greaves
   pause 1
 
-  put get thick greaves
-  put wear thick greaves
+  put get light greaves
+  put wear light greaves
   pause 2
+
+  put .tw
+  pause 1
+
+  put stance set 100 0 85 100
+  pause 0.5
+
+  put #var exp_threshold 32
+
+  gosub use_stonebow
+  gosub train_weap 
+  put stow stonebow
+  pause 0.5
+
+  gosub use_sling
+  gosub train_weap
+  put wear slingshot
+  pause 0.5
+
+  gosub use_shortbow
+  gosub train_weap
+  put stow shortbow
+  pause 0.5
+
+  put #var exp_threshold 34
+
+  var skill light thrown
+  var weapon club
+  gosub train_weap
+  put stow club
+
+  pause 0.25
+
+  put #script abort tw
 
   put .ignite
   pause 1
@@ -38,18 +69,11 @@ start:
   put stow war hammer
   pause 0.5
 
-  put summon weapon
-  pause 2
-
-  put shape $righthand to fire
-  pause 2
-
   var skill large blunt
-  var weapon hara
-  gosub train_summoned_weap
-
-  put break $righthand
-  pause 2
+  var weapon mallet
+  gosub train_weap
+  put stow mallet
+  pause 0.5
 
   var skill small edged
   var weapon hanger
@@ -57,41 +81,6 @@ start:
   put stow hanger
   pause 0.5
 
-  put stance set 100 0 85 100
-  pause 0.5
-
-  put .tw
-  pause 1
-
-  var skill light thrown
-  var weapon club
-  gosub train_weap
-  put stow club
-  pause 0.25
-
-  put #script abort ignite
-  pause 1
-
-  put stance set 100 0 85 100
-  pause 0.5
-
-  put #var exp_threshold 32
-
-  gosub use_shortbow
-  gosub train_weap
-  put stow shortbow
-
-  gosub use_stonebow
-  gosub train_weap 
-  put stow stonebow
-  pause 0.5
-
-  gosub use_sling
-  gosub train_weap
-  put wear slingshot
-  pause 0.5
-
-  put #script abort tw
   goto end
 
 use_sling:
@@ -149,9 +138,10 @@ end:
   put #script abort es
   put #script abort etf
   put #script abort tw
+  put #script abort ignite
   pause 0.5
   put #var powerwalk 1
-  put #goto $destination
+  put .travel $destination
   waitforre ^YOU HAVE ARRIVED
   put #var powerwalk 0
   put #flash

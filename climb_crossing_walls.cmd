@@ -130,7 +130,9 @@ FAIL-01:
 FAIL-01x:
   move down
   move s
+  pause 0.25
   move s
+  pause 0.25
   move sw
   goto CLIMB-02
 

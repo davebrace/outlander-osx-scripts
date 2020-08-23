@@ -7,7 +7,7 @@ compstart:
 
 study:
   gosub clear
-  if $FirstAid.LearningRate > 33 then {
+  if $First_Aid.LearningRate > 33 then {
     goto end
   }
   pause 0.1

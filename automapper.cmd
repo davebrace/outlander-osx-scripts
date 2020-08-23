@@ -1,4 +1,3 @@
-#
 # automapper.cmd - version 0.4
 # Requires Outlander 0.11.4 or higher
 # added SCRIPT handling ~ SAUVA(Hanryu) - 5/17/17
@@ -111,7 +110,7 @@ stand:
 powerwalk:
   if $Attunement.LearningRate > 33
   {
-    # put #var powerwalk 0
+    put #var powerwalk 0
     return
   }
   matchre stop.play too busy performing
@@ -125,5 +124,5 @@ stop.play:
   goto powerwalk
 
 end:
-  # put #var powerwalk 0
+  put #var powerwalk 0
   put #parse YOU HAVE ARRIVED

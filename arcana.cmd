@@ -9,13 +9,13 @@ use_armband:
   gosub clear
   gosub exp_check
 
-  gosub cast_spell etf 15 9 5 fire
+  gosub cast_spell etf 15 22 fire
 
-  gosub cast_spell sw 5 32 11
-  gosub cast_spell suf 5 32 11
+  gosub cast_spell sw 5 48
+  gosub cast_spell suf 5 48
 
-  gosub cast_spell es 1 25 8
-  gosub cast_spell ignite 5 15 8 mallet
+  gosub cast_spell es 1 48
+  gosub cast_spell ignite 5 43 mallet
 
   goto use_armband
 
@@ -31,8 +31,7 @@ cast_spell:
   var spell_name $1
   var prep_mana $2
   var charge_mana $3
-  var harness_mana $4
-  var spell_target $5
+  var spell_target $4
 
   gosub mana_check
 
@@ -42,19 +41,10 @@ cast_spell:
   gosub charge_arm 
   gosub invoke_arm
 
-  gosub harness
-
   match cast You feel fully prepared to cast your spell
   matchwait 35
   return
 
-harness:
-  pause 0.25
-  matchre return You tap into
-  matchre harness ...wait
-  put harness %harness_mana
-  matchwait 2
-  return
 
 exp_check:
   if $Arcana.LearningRate >= 34 then goto move_out

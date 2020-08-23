@@ -50,7 +50,7 @@ cast:
   return
 
 cast_eth_fissure:
-  gosub set_charge_mana 15
+  gosub set_charge_mana 26
 
   gosub check_mana
 
@@ -70,7 +70,7 @@ cast_tm:
   gosub harness_tm
 
   matchre cast You feel fully prepared|formation of a targeting pattern|target pattern has finished forming
-  matchwait 6
+  matchwait 4
   if "$preparedspell" != "None" then {
     gosub cast
   }
@@ -86,7 +86,7 @@ harness_tm:
 
 prep_tm:
   pause 0.5
-  gosub set_charge_mana 20
+  gosub set_charge_mana 24
 
   gosub check_mana
 
@@ -182,7 +182,7 @@ check_loot:
   goto target 
 
 check_mana:
-  if $mana <= 24 {
+  if $mana <= 25 {
     echo  *** Recovering mana ***
     pause 0.5
     send bob

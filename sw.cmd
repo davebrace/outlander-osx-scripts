@@ -6,7 +6,7 @@ sw:
     goto sw
   }
 
-  if $mana <= 55 then {
+  if $mana <= 65 then {
     pause 5
     goto sw
   }
@@ -23,7 +23,7 @@ prep_sw:
   match return You trace a hasty sigil in the air, shaping the pattern of the Swirling Winds spell
   matchre prep_sw ...wait|Sorry, you may only type ahead
   match sw You are already
-  put prep sw 58
+  put prep sw 67
   matchwait
   return
 

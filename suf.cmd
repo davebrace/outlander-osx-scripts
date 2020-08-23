@@ -6,7 +6,7 @@ suf:
     goto suf
   }
 
-  if $mana <= 70 then {
+  if $mana <= 67 then {
     pause 6
     goto suf
   }
@@ -23,7 +23,7 @@ prep_suf:
   match return You trace a hasty sigil in the air, shaping the pattern of the Sure Footing spell
   matchre prep_suf ...wait|Sorry, you may only type ahead
   match suf You are already
-  put prep suf 58
+  put prep suf 67
   matchwait
   return
 

@@ -73,7 +73,7 @@ lance:
 #
 #  Critter variables
 #
-var skinnablecritters rat|hog|goblin|boar|eel|bobcat|cougar|reaver|wolf|snowbeast|gargoyle|togball|ape|tusky|wyvern|warcat|lach|stalker|mastiff|gryphon|troll|firecat|blood warrior|shadow mage|gremlin|darvager|jackal|kobold|leucro|arbelog|ram|bear|deer|serpent|shalswar|peccary
+var skinnablecritters rat|hog|goblin|boar|eel|bobcat|cougar|reaver|wolf|snowbeast|gargoyle|togball|ape|tusky|wyvern|warcat|lach|stalker|mastiff|gryphon|troll|firecat|blood warrior|shadow mage|gremlin|darvager|jackal|kobold|leucro|arbelog|ram|bear|deer|serpent|shalswar|peccary|angiswaerd|ogre
 
 #
 #  Actions
@@ -232,7 +232,7 @@ boxes:
 
 wield:
 
-  if "%weapon" = "mallet" || "%weapon" = "bola" then goto appraise_weapon
+  if "%weapon" = "throwing hammer" || "%weapon" = "bola" then goto appraise_weapon
 
   matchre appraise_weapon You draw|You slip|already holding|You deftly
   matchre remove_weapon remove it first

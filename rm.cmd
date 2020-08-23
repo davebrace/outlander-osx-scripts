@@ -23,7 +23,7 @@ prep_rm:
   match return You trace a hasty sigil in the air, shaping the pattern of the Rising Mists spell
   matchre prep_rm ...wait|Sorry, you may only type ahead
   match rm You are already
-  put prep rm 33
+  put prep rm 38
   matchwait
   return
 

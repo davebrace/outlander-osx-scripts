@@ -22,13 +22,14 @@ waitfor Overall state of mind
 if ($Locksmithing.Ranks >= 15) then
 {
   action (disarm) var mode careful when not likely to be a good thing
+  action (disarm) var mode careful when frighteningly large vial of naphtha
   action (disarm) var mode quick when An aged grandmother could|is a laughable matter|is a trivially constructed
   action (disarm) var mode normal when should not take long with your skills|is precisely at your skill level|will be a simple matter for you to
   action (disarm) var mode careful when with only minor troubles|got a good shot at|some chance of being able|with persistence you believe you could|would be a longshot|minimal chance|You really don't have any chance|Prayer would be a good start
   action (disarm) var mode toss when You could just jump off a cliff|same shot as a snowball|pitiful snowball encased in the Flames
 
-  action (picklock) var mode blind when is a laughable matter|An aged grandmother could
-  action (picklock) var mode quick when will be a simple matter for you to|The lock is a trivially constructed piece of junk barely worth your time
+  action (picklock) var mode blind when An aged grandmother could
+  action (picklock) var mode quick when will be a simple matter for you to|The lock is a trivially constructed piece of junk barely worth your time|is a laughable matter
   action (picklock) var mode normal when should not take long with your skills|is precisely at your skill level|with only minor troubles
   action (picklock) var mode careful when got a good shot at|some chance of being able|with persistence you believe you could|would be a longshot|minimal chance|You really don't have any chance|Prayer would be a good start
   action (picklock) var mode toss when You could just jump off a cliff|same shot as a snowball|pitiful snowball encased in the Flames

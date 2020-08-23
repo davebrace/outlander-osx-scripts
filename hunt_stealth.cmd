@@ -1,16 +1,12 @@
 put #var train_stealth YES
-put #var destination 33
+put #var destination Hib
 put #var arrange_count 1
 put #var exp_threshold 34
 
 put .rm
-pause 1
-
-put .sw
-pause 1
-
-put .suf
-pause 1
+put .delay_30 sw
+put .delay_60 suf
+put .delay_150 es
 
 start:
   put rem greaves
@@ -24,47 +20,15 @@ start:
 
   gosub summon_nightstick
   gosub train_offhand_weap
-
-  put break $righthand
-  pause 2
+  put put nightstick in my shadow
 
   goto end
 
 summon_nightstick:
   var weapon nightstick
   var skill staves
-
-  if "$righthand" != "Empty" then {
-    put shape $righthand to %skill
-    pause 2
-  } else {
-    put summon weapon %skill
-    pause 2
-
-    put shape $righthand to fire
-    pause 2
-  }
-
-  put turn $righthand
-  pause 1.5
-
-  return
-
-
-train_summoned_weap:
-  if "$righthand" != "Empty" then {
-    put shape $righthand to %skill
-    pause 2
-  } else {
-    put summon weapon %skill
-    pause 2
-
-    put shape $righthand to fire
-    pause 2
-  }
-  
-  gosub train_weap
-
+  put get my nightstick
+  pause 0.5
   return
 
 swap_greaves:
@@ -94,6 +58,7 @@ end:
   put #script abort sw
   put #script abort suf
   put #script abort rm
+  put #script abort es
   pause 0.5
 
   put #var powerwalk 1

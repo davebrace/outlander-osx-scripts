@@ -14,8 +14,8 @@ go:
   return
 
 automapper:
-  put #goto $0
-  waitforre ^YOU HAVE ARRIVED
+  put .travel $0
+  waitfor TRAVEL DONE
   echo
   echo *** You have arrived at $roomtitle ***
   echo

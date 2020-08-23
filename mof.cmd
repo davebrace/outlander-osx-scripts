@@ -24,7 +24,7 @@ prep_mof:
   match return You trace a hasty sigil in the air, shaping the pattern of the Mantle of Flame spell
   matchre prep_mof ...wait|Sorry, you may only type ahead
   match mof You are already
-  put prep mof 340
+  put prep mof 376
   matchwait
   return
 
@@ -43,7 +43,7 @@ invoke:
 
 lower_right:
   if "$righthand" != "Empty" then {
-    var right_item $righthand
+    var right_item $righthandnoun
     matchre return You lower
     matchre lower_right ...wait
     put lower %right_item ground
