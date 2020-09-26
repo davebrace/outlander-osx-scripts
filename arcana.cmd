@@ -3,24 +3,24 @@
 start:
   put get mallet
   pause 0.5
-  goto use_armband
+  goto train
 
-use_armband:
+train:
   gosub clear
   gosub exp_check
 
-  gosub cast_spell etf 15 22 fire
+  gosub cast_spell etf 15 29 fire
 
-  gosub cast_spell sw 5 48
-  gosub cast_spell suf 5 48
+  gosub cast_spell sw 5 69
+  gosub cast_spell suf 5 69
 
-  gosub cast_spell es 1 48
-  gosub cast_spell ignite 5 43 mallet
+  gosub cast_spell es 2 60
+  gosub cast_spell ignite 5 47 mallet
 
-  goto use_armband
+  goto train
 
 mana_check:
-  if $mana <= 30 {
+  if $mana <= 40 {
     echo  *** Recovering mana ***
     pause 5
     goto mana_check
@@ -38,8 +38,8 @@ cast_spell:
   put prep %spell_name %prep_mana
   pause 0.5
 
-  gosub charge_arm 
-  gosub invoke_arm
+  gosub charge
+  gosub invoke
 
   match cast You feel fully prepared to cast your spell
   matchwait 35
@@ -50,19 +50,19 @@ exp_check:
   if $Arcana.LearningRate >= 34 then goto move_out
   return
 
-charge_arm:
+charge:
   pause 0.25
   matchre return You harness
-  matchre charge_arm ...wait
-  put charge armband %charge_mana
+  matchre charge ...wait
+  put charge my cub %charge_mana
   matchwait 6
   return
 
-invoke_arm:
+invoke:
   pause 0.25
-  matchre invoke_arm but fail|accidentally attune yourself|...wait
+  matchre invoke but fail|accidentally attune yourself|...wait
   matchre return readying all of its mana|you only are able to attune yourself|manage to attune yourself exactly as you intended to|
-  put invoke my armband %charge_mana
+  put invoke my cub %charge_mana
   matchwait 30
   return
 
@@ -75,7 +75,6 @@ done:
   return
 
 move_out:
-  put stow mallet
   pause 2
   put #parse ARCANA DONE
   put #flash

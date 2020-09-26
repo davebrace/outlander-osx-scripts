@@ -6,7 +6,7 @@ put #var arrange_count 1
 put #var exp_threshold 34
 
 put .mof
-pause 3
+pause 4
 put .delay_30 sw
 put .delay_60 suf
 put .delay_90 etf
@@ -20,13 +20,14 @@ start:
   pause 1
 
   put get light greaves
+  pause 1
   put wear light greaves
   pause 2
 
   put .tw
   pause 1
 
-  put stance set 100 0 85 100
+  put stance set 100 0 86 100
   pause 0.5
 
   put #var exp_threshold 32
@@ -60,7 +61,7 @@ start:
   put .ignite
   pause 1
 
-  put stance set 62 60 63 100
+  put stance set 63 60 63 100
   pause 0.5
 
   var skill small blunt
@@ -139,9 +140,11 @@ end:
   put #script abort etf
   put #script abort tw
   put #script abort ignite
+  put #script abort zephyr
   pause 0.5
   put #var powerwalk 1
   put .travel $destination
   waitforre ^YOU HAVE ARRIVED
   put #var powerwalk 0
   put #flash
+  put release mof

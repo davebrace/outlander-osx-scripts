@@ -10,11 +10,12 @@ put .delay_150 es
 
 start:
   put rem greaves
-  pause 2
+  pause 3
   put stow greaves
   pause 1
 
   put get thick greaves
+  pause 0.5
   put wear thick greaves
   pause 1.5
 

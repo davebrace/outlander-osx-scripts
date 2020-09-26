@@ -19,7 +19,7 @@ prep_fb:
   match target_wait You begin to weave mana lines into a target pattern around 
   match fb You are already
   matchre prep_fb ...wait|Sorry, you may only type ahead
-  put targ fb 57
+  put targ fb 63
   matchwait
   return
 

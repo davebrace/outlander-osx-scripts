@@ -6,8 +6,8 @@ put #var arrange_count 0
 put #var exp_threshold 34
 
 put .aeg
-pause 3
 put .delay_30 sw
+pause 4
 put .delay_60 suf
 put .delay_90 etf
 put .delay_120 ignite 
@@ -21,12 +21,35 @@ start:
   put wear pouch
   pause 0.5
 
-  put stance set 62 60 63 100
+  put stance set 100 0 86 100
+  pause 0.5
+
+  put .tw
+  pause 0.5
+
+  gosub use_ht
+  gosub train_weap
+  put stow hammer
+  pause 0.5
+
+  put #script abort tw
+
+  put stance set 63 60 63 100
   pause 0.5
 
   gosub use_dagesse
   gosub train_weap
   put stow dagesse
+  pause 0.5
+
+  gosub use_2he 
+  gosub train_weap 
+  put put flamberge in harness
+  pause 0.5
+
+  gosub use_staff
+  gosub train_weap
+  put put staff in harness
   pause 0.5
 
   gosub use_polearm 
@@ -39,49 +62,12 @@ start:
   put put maul in harness
   pause 0.5
 
-  gosub use_staff
-  gosub train_weap
-  put put staff in harness
-  pause 0.5
-
   gosub use_brawling
   gosub train_weap
-
-  put stance set 62 60 63 100
-  pause 0.5
-
-  gosub use_2he 
-  gosub train_weap 
-  put put flamberge in harness
-  pause 0.5
-
-  put stance set 100 0 85 100
-  pause 0.5
-
-  put .tw
-  pause 0.5
-
-  gosub use_ht
-  gosub train_weap
-  put stow hammer
-
-  put #script abort tw
-
-  put stance set 62 60 63 100
-  pause 0.5
 
   gosub train_magic
 
   goto end
-
-summon_weapon:
-  put summon weapon
-  pause 2
-
-  put shape $righthand to fire
-  pause 2
-
-  return
 
 swap_greaves:
   put .swap_greaves
@@ -114,15 +100,6 @@ use_staff:
   var skill staves
   put get staff
   pause 0.5
-  return
-
-summon_quarter:
-  var skill staves
-  var weapon quarterstaff
-
-  put shape $righthand to %skill
-  pause 2
-
   return
 
 use_polearm:
@@ -162,6 +139,7 @@ train_magic:
   put #script abort es
   put #script abort tw
   put #script abort fb
+  put #script abort zephyr
   put .hunt_magic
   waitforre ^HUNT DONE
   pause 0.5
@@ -179,6 +157,7 @@ end:
   put #script abort es
   put #script abort tw
   put #script abort fb
+  put #script abort zephyr
 
   put release cyclic
   pause 0.5

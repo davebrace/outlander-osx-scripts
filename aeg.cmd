@@ -24,7 +24,7 @@ prep_aeg:
   match return You trace a hasty sigil in the air, shaping the pattern of the Aegis of Granite spell
   matchre prep_aeg ...wait|Sorry, you may only type ahead
   match aeg You are already
-  put prep aeg 376
+  put prep aeg 408
   matchwait
   return
 
@@ -86,10 +86,12 @@ invoke_clasp:
 cast:
   pause 0.25
   match return You draw forth a pulse of dusky green Earth 
-  match aeg backfires
-  matchre cast ...wait|Sorry, you may only type 1
+  matchre aeg backfires|You don't have a spell prepared
+  matchre cast ...wait
   put cast
-  matchwait
+  matchwait 5
+  gosub cast
+  return
 
 disperse:
   pause 1

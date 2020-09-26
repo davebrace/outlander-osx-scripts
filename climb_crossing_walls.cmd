@@ -119,9 +119,11 @@ PASS-01x:
   move e
   move go gate
   move go footpath
+  pause 0.25
   goto FAIL-01
 
 FAIL-01:
+  pause 0.25
   match FAIL-01 ...wait
   match FAIL-01x [
   put s
@@ -129,6 +131,7 @@ FAIL-01:
 
 FAIL-01x:
   move down
+  pause 0.25
   move s
   pause 0.25
   move s

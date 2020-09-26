@@ -22,10 +22,11 @@ mof:
 prep_mof:
   pause 0.5
   match return You trace a hasty sigil in the air, shaping the pattern of the Mantle of Flame spell
-  matchre prep_mof ...wait|Sorry, you may only type ahead
+  match prep_mof ...wait
   match mof You are already
-  put prep mof 376
-  matchwait
+  put prep mof 408
+  matchwait 5
+  goto mof
   return
 
 invoke:
@@ -85,11 +86,13 @@ invoke_clasp:
 
 cast:
   pause 0.25
-  matchre cast ...wait|Sorry, you may only type ahead 1 command
+  matchre cast ...wait
   match return A crackling mantle of blazing orange-yellow flames surrounds you
-  match mof backfires
+  matchre mof backfires|You don't have a spell prepared
   put cast
-  matchwait
+  matchwait 5
+  gosub cast
+  return
 
 disperse:
   pause 1

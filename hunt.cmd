@@ -78,7 +78,7 @@ var skinnablecritters rat|hog|goblin|boar|eel|bobcat|cougar|reaver|wolf|snowbeas
 #
 #  Actions
 #
-action put #beep;put #flash when ^(.+) (say|says|asks|exlaims|whispers)
+action put #beep when ^(.+) (say|says|asks|exlaims|whispers)
 action (info) var guild $1;put #var guild $1 when Guild:\s+(Barbarian|Bard|Cleric|Commoner|Empath|Moon Mage|Necromancer|Paladin|Ranger|Thief|Trader|Warrior Mage)$
 action (info) var circle $1;put #var circle $1 when Circle:\s+(\d+)$
 action (skill) var skill Polearms when .*polearm skills\.$|polearm skill\.$
@@ -890,7 +890,7 @@ abort:
 
   abort.loop:
 
-    if %abort_count >= 10 {
+    if %abort_count >= 5 {
       goto aborted
     }
 
@@ -910,6 +910,22 @@ aborted:
   # gosub sheath_weapon
   put #parse HUNT ABORTED
   put look
+  put #script abort sw
+  put #script abort suf
+  put #script abort aeg
+  put #script abort ignite
+  put #script abort etf
+  put #script abort es
+  put #script abort tw
+  put #script abort fb
+  put #script abort rm
+  put #script abort zephyr
+  put #script abort hunt_high
+  put #script abort hunt_low
+  put #script abort hunt_stealth
+
+  put release cyclic
+  put .travel $destination
   exit
 
 sheath_weapon:

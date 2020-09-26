@@ -10,7 +10,7 @@ start:
 
   put release cyclic
 
-  put stance set 62 60 63 100
+  put stance set 63 60 63 100
   pause 1
 
   goto debuff
@@ -50,7 +50,7 @@ cast:
   return
 
 cast_eth_fissure:
-  gosub set_charge_mana 26
+  gosub set_charge_mana 33
 
   gosub check_mana
 
@@ -127,7 +127,7 @@ set_spell_action:
   return
 
 use_cambrinth:
-  put charge armband %charge_mana
+  put charge my cub %charge_mana
   pause 3 
   gosub invoke_cambrinth
   return
@@ -135,7 +135,7 @@ use_cambrinth:
 invoke_cambrinth:
   matchre invoke_cambrinth but fail|accidentally attune yourself|...wait
   matchre done readying all of its mana|you only are able to attune yourself|manage to attune yourself exactly as you intended to
-  put invoke my armband %charge_mana
+  put invoke my cub %charge_mana
   matchwait 2
   return
 

@@ -8,7 +8,7 @@ play:
   matchre play ...wait
   matchre finish You struggle to begin|You're already playing|You fumble slightly as you begin|You begin a|You begin some
 
-  put play ballad cheerful
+  put play waltz cheerful
   matchwait
 
 finish:
