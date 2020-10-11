@@ -231,6 +231,7 @@ boxes:
   return
 
 wield:
+  pause 0.1
 
   if "%weapon" = "throwing hammer" || "%weapon" = "bola" then goto appraise_weapon
 
@@ -238,8 +239,9 @@ wield:
   matchre remove_weapon remove it first
   matchre no_weapon Wield what?
   matchre get_weapon as it is lying at your feet
+  match wield ...wait
   send wield my %weapon
-  matchwait
+  matchwait 5
 
 get_weapon:
   send get %weapon
@@ -890,7 +892,7 @@ abort:
 
   abort.loop:
 
-    if %abort_count >= 5 {
+    if %abort_count >= 3 {
       goto aborted
     }
 
@@ -910,6 +912,7 @@ aborted:
   # gosub sheath_weapon
   put #parse HUNT ABORTED
   put look
+  pause 0.5
   put #script abort sw
   put #script abort suf
   put #script abort aeg
@@ -925,6 +928,7 @@ aborted:
   put #script abort hunt_stealth
 
   put release cyclic
+  pause 0.5
   put .travel $destination
   exit
 

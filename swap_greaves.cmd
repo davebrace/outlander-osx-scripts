@@ -1,8 +1,8 @@
+var armor light greaves
+
 start:
-  put rem greaves
-  pause 3.5
-  put stow greaves
-  pause 0.5
+  gosub rem_greaves
+  gosub stow_greaves
 
   var armor light greaves
 
@@ -33,10 +33,47 @@ start:
     var armor light greaves
   }
   
-  put get %armor
-  pause 0.5
+  gosub get_greaves
   
-  put wear %armor
-  pause 3.5
+  gosub wear_armor
 
   put #parse GREAVES SWAPPED
+
+  exit
+
+rem_greaves:
+  pause 0.2
+  matchre return You remove some|Remove what?
+  match rem_greaves ...wait
+  put remove greaves
+  matchwait 3
+  gosub rem_greaves
+  return
+
+stow_greaves:
+  pause 0.2
+  matchre return You put your greaves|Stow what?
+  match stow_greaves ...wait
+  put stow greaves
+  matchwait 3
+  gosub stow_greaves
+  return
+
+get_greaves:
+  pause 0.2
+  match return You get some
+  match get_greaves ...wait
+  put get %armor
+  matchwait 3
+  gosub get_greaves
+  return
+
+wear_armor:
+  pause 0.2
+  match return You attach some
+  match wear_armor ...wait
+  match stow You can't fit
+  put wear %armor
+  matchwait 3 
+  gosub wear_armor
+  return

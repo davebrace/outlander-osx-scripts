@@ -30,7 +30,7 @@ prep_es:
   pause 0.5
   match return You trace a hasty sigil in the air, shaping the pattern of the Ethereal Shield spell
   matchre prep_es ...wait
-  match es You are already
+  matchre es You are already|You don't have a spell prepared!
   put prep es %min_prep
   matchwait 5
   goto es

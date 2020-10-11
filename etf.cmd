@@ -39,7 +39,7 @@ cast:
   pause 0.25
   match cast ...wait
   match return A spinning ball of vivid blue aether appears within the pattern your hands define.
-  match etf backfires
+  matchre etf backfires|You don't have a spell prepared!
   put cast fire
   matchwait 5
   gosub cast

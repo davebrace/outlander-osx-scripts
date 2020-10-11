@@ -48,6 +48,21 @@ go:
     return
   }
 
+  eval dir replacere("%dir", "-\d+\.?\d* ?", "")
+  if matchre("%dir", ";") then {
+    eval dir replacere("%dir", ";", "\|")
+    var dir %dir|
+    movesLoop:
+      eval moves countsplit(%dir,"|")
+      math moves subtract 1
+      if %moves < 1 then {return}
+      var temp %dir
+      var dir %dir[0]
+      gosub go.retry
+      eval dir replacere(%temp,\A%dir\|,"")
+      goto movesLoop
+  }
+
 go.retry:
   matchre return Obvious (paths|exits)|It's pitch dark
   matchre go.retry \.\.\.wait|Sorry, you may only|Sorry, system is slow|You can't ride your \w+ broom in that direction

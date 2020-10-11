@@ -24,7 +24,7 @@ prep_aeg:
   match return You trace a hasty sigil in the air, shaping the pattern of the Aegis of Granite spell
   matchre prep_aeg ...wait|Sorry, you may only type ahead
   match aeg You are already
-  put prep aeg 408
+  put prep aeg 410
   matchwait
   return
 
@@ -74,14 +74,18 @@ wear_clasp:
   match return You put on a luminous
   match wear_clasp ...wait
   put wear clasp
-  matchwait
+  matchwait 5
+  gosub wear_clasp
+  return
 
 invoke_clasp:
   pause 0.1
   match return You make sweeping
   match invoke_clasp ...wait
   put invoke clasp
-  matchwait
+  matchwait 5
+  gosub invoke_clasp
+  return
 
 cast:
   pause 0.25

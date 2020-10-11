@@ -29,19 +29,21 @@ zephyr:
 prep_zephyr:
   pause 0.5
   match return You trace a hasty sigil in the air, shaping the pattern of the Zephyr spell
-  matchre prep_zephyr ...wait|Sorry, you may only type ahead
+  match prep_zephyr ...wait
   match zephyr You are already
   put prep zephyr %min_prep
-  matchwait
+  matchwait 5
+  goto zephyr
   return
 
 cast:
   pause 0.25
-  matchre cast ...wait|Sorry, you may only type ahead 1 command
-  matchre return A (moderate|light) pleasant breeze begins to stir.
-  match zephyr backfires
+  matchre cast ...wait
+  matchre return breeze begins to stir.|There is already a stronger magical breeze blowing here.
+  matchre zephyr backfires|You don't have a spell prepared
   put cast
-  matchwait
+  matchwait 5
+  gosub cast
   return
 
 charge:

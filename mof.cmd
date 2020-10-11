@@ -24,7 +24,7 @@ prep_mof:
   match return You trace a hasty sigil in the air, shaping the pattern of the Mantle of Flame spell
   match prep_mof ...wait
   match mof You are already
-  put prep mof 408
+  put prep mof 410
   matchwait 5
   goto mof
   return
@@ -75,14 +75,18 @@ wear_clasp:
   match return You put on a luminous
   match wear_clasp ...wait
   put wear clasp
-  matchwait
+  matchwait 5
+  gosub wear_clasp
+  return
 
 invoke_clasp:
   pause 0.1
   match return You make sweeping
-  match invoke_clasp ...wait 
+  match invoke_clasp ...wait
   put invoke clasp
-  matchwait
+  matchwait 5
+  gosub invoke_clasp
+  return
 
 cast:
   pause 0.25

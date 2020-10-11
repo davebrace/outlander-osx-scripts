@@ -37,9 +37,14 @@ start:
   put stance set 63 60 63 100
   pause 0.5
 
-  gosub use_dagesse
+  gosub use_maul
   gosub train_weap
-  put stow dagesse
+  put put maul in harness
+  pause 0.5
+
+  gosub use_polearm 
+  gosub train_weap
+  put put voulge in harness
   pause 0.5
 
   gosub use_2he 
@@ -52,18 +57,13 @@ start:
   put put staff in harness
   pause 0.5
 
-  gosub use_polearm 
-  gosub train_weap
-  put put voulge in harness
-  pause 0.5
-
-  gosub use_maul
-  gosub train_weap
-  put put maul in harness
-  pause 0.5
-
   gosub use_brawling
   gosub train_weap
+
+  gosub use_dagesse
+  gosub train_weap
+  put stow dagesse
+  pause 0.5
 
   gosub train_magic
 
@@ -170,5 +170,3 @@ end:
   waitforre SUMMONING DONE
   put .scholar
   waitforre SCHOLARSHIP DONE
-  put .arcana
-  waitforre ARCANA DONE

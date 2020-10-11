@@ -1,4 +1,4 @@
-var mana 75
+var mana 77
 
 var min_prep 5
 var charge_amount %mana
@@ -58,7 +58,7 @@ cast:
   pause 0.25
   matchre cast ...wait
   match return You feel steadier.
-  matchre suf backfires|are too mentally fatigued to finish the pattern
+  matchre suf backfires|are too mentally fatigued to finish the pattern|You don't have a spell prepared!
   put cast
   matchwait
   return

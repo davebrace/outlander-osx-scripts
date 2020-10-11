@@ -148,3 +148,6 @@ end:
   put #var powerwalk 0
   put #flash
   put release mof
+  put .summon
+  waitforre SUMMONING DONE
+  put #flash
